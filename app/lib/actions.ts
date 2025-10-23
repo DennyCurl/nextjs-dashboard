@@ -29,10 +29,7 @@ const UpdateInvoice = z.object({
 });
 
 export type State = {
-  errors?: {
-    patientId?: string[];
-    complaints?: string[];
-  };
+  errors?: Record<string, string[]>;
   message?: string | null;
 };
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
+import { Customer, InvoiceForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -14,10 +14,10 @@ import { useActionState } from 'react';
  
 export default function EditInvoiceForm({
   invoice,
-  customers,
+  customers = [],
 }: {
   invoice: InvoiceForm;
-  customers: CustomerField[];
+  customers?: Customer[];
 }) {
   const initialState: State = { message: null, errors: {} };
   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);

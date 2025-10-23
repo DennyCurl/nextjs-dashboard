@@ -75,10 +75,23 @@ export type FormattedCustomersTable = {
   total_paid: string;
 };
 
-export type CustomerField = {
+export type PatientField = {
   id: string;
-  name: string;
+  full_name: string;
 };
+
+// Тип одного елемента (скарги)
+export type ComplaintOption = {
+  id: string;
+  label: string;
+};
+
+// Тип масиву всіх скарг
+export type ComplaintsList = ComplaintOption[];
+
+// Тип для стану у формі
+export type ComplaintsState = string[];
+
 
 export type InvoiceForm = {
   id: string;

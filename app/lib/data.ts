@@ -1,6 +1,6 @@
 import postgres from 'postgres';
 import {
-  CustomerField,
+  PatientField,
   CustomersTableType,
   InvoiceForm,
   InvoicesTable,
@@ -16,8 +16,8 @@ export async function fetchRevenue() {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
 
-    console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // console.log('Fetching revenue data...');
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue[]>`SELECT * FROM revenue`;
 
@@ -167,20 +167,20 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
-export async function fetchCustomers() {
+export async function fetchPatients() {
   try {
-    const customers = await sql<CustomerField[]>`
+    const patients = await sql<PatientField[]>`
       SELECT
         id,
-        name
-      FROM customers
-      ORDER BY name ASC
+        CONCAT(last_name, ' ', first_name, ' ', middle_name, ', ', TO_CHAR(birth_date, 'DD.MM.YYYY'))  AS full_name
+      FROM patients
+      ORDER BY last_name, first_name;
     `;
 
-    return customers;
+    return patients;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
+    throw new Error('Failed to fetch all patients.');
   }
 }
 

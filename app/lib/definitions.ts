@@ -99,3 +99,25 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+// --- Common app types used in forms/components ---
+export type SelectedDiagnosis = {
+  id?: number | null;
+  code: string;
+  label: string;
+  note?: string | null;
+};
+
+export type SelectedMedication = {
+  id?: number | null;
+  code: string;
+  label: string;
+  dose?: string | null;
+  note?: string | null;
+  // times per day
+  frequencyPerDay?: number | null;
+  // how many days remaining/prescribed
+  days?: number | null;
+  // prescription sheet number (if came from prescriptions table)
+  prescriptionNumber?: string | null;
+};

@@ -6,8 +6,9 @@ import { UserCircleIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { createExamination, State } from '@/app/lib/actions';
 import { useState, useActionState } from 'react';
-import DiagnosisField, { SelectedDiagnosis } from './diagnosis';
-import MedicationsField, { SelectedMedication } from './medications';
+import DiagnosisField from './diagnosis';
+import MedicationsField from './medications';
+import type { SelectedDiagnosis, SelectedMedication } from '@/app/lib/definitions';
 
 export default function Form({ patients }: { patients: PatientField[] }) {
   // manual complaints from checkboxes and text input
@@ -143,6 +144,7 @@ export default function Form({ patients }: { patients: PatientField[] }) {
                         duration_days: number | null;
                         full_drug_name?: string | null;
                         start_date?: string | null;
+                        prescription_number?: string | null;
                       }>;
                       const MS_PER_DAY = 1000 * 60 * 60 * 24;
                       const today = new Date();

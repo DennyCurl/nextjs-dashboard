@@ -1,22 +1,11 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import type { SelectedMedication } from '@/app/lib/definitions';
 import { MagnifyingGlassIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 
-export type SelectedMedication = {
-  id?: number | null;
-  code: string;
-  label: string;
-  dose?: string | null;
-  note?: string | null;
-  // скільки разів на день приймати
-  frequencyPerDay?: number | null;
-  // скільки днів приймати
-  days?: number | null;
-  // номер листа призначень, якщо цей препарат прийшов з таблиці prescriptions
-  prescriptionNumber?: string | null;
-};
+// SelectedMedication is imported from app/lib/definitions
 
 export default function MedicationsField({ onChange, initialSelected }: { onChange?: (selected: SelectedMedication[]) => void; initialSelected?: SelectedMedication[] }) {
   const [selected, setSelected] = useState<SelectedMedication[]>(initialSelected ?? []);

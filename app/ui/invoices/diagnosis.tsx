@@ -1,16 +1,12 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from 'react';
 import { useRef } from 'react';
+import type { SelectedDiagnosis } from '@/app/lib/definitions';
 import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 
-export type SelectedDiagnosis = {
-  id?: number | null;
-  code: string;
-  label: string;
-  note?: string | null;
-};
+// SelectedDiagnosis imported from app/lib/definitions
 
 export default function DiagnosisField({ onChange }: { onChange?: (selected: SelectedDiagnosis[]) => void }) {
   const [selected, setSelected] = useState<SelectedDiagnosis[]>([]);

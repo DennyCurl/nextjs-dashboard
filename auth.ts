@@ -20,6 +20,32 @@ async function getUser(email: string): Promise<User | undefined> {
  
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  callbacks: {
+    // preserve any existing callbacks from authConfig and ensure session contains user.id
+    ...(authConfig.callbacks ?? {}),
+
+    // Ensure JWT contains user id and session exposes it
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async jwt(params: any) {
+      const { token, user } = params;
+      if (user?.id) {
+        token.sub = String(user.id);
+      }
+      return token;
+    },
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async session(params: any) {
+      const { session, token, user } = params;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user?.id ?? token?.sub ?? session.user?.id,
+        },
+      };
+    },
+  },
   providers: [
     Credentials({
       async authorize(credentials) {

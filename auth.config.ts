@@ -5,15 +5,20 @@ export const authConfig = {
     signIn: '/login',
   },
   callbacks: {
+    // The `authorized` callback must return a boolean indicating whether the
+    // current request is authorized. Returning a Response (eg. using
+    // `Response.redirect`) from this callback causes runtime errors like
+    // "NextResponse.next() was used in a app route handler". Keep the logic
+    // limited to boolean checks and perform redirects elsewhere (middleware
+    // or client-side navigation).
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
+      // Only allow access to dashboard routes when logged in
       if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl));
+        return isLoggedIn;
       }
+      // For all other routes allow access
       return true;
     },
   },

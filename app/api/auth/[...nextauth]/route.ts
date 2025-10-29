@@ -1,9 +1,48 @@
-import NextAuth from 'next-auth';
-import { authConfig } from '../../../../auth.config';
+// Use dynamic import to call the handler exported from `app/auth.ts` at runtime.
+// Export real functions for each HTTP method so Next.js type-checks the route
+// signatures as `(request: Request) => Response | Promise<Response>`.
+// We keep a narrow, explicit `Request` parameter and cast the imported
+// `auth` handler to `any` when invoking to avoid type incompatibilities
+// between NextAuth's helper types and Next.js Route types at build time.
 
-// Create a NextAuth handler and export it for the App Router HTTP method
-// exports. This matches the expected `(request: Request) => Response` shape
-// for `GET`/`POST` etc. and satisfies Next.js type checking.
-const handler = NextAuth(authConfig);
+export async function GET(request: Request) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const mod = await import('../../../../auth');
+	return (mod as any).auth(request);
+}
 
-export { handler as GET, handler as POST, handler as PUT, handler as DELETE, handler as PATCH, handler as OPTIONS, handler as HEAD };
+export async function POST(request: Request) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const mod = await import('../../../../auth');
+	return (mod as any).auth(request);
+}
+
+export async function PUT(request: Request) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const mod = await import('../../../../auth');
+	return (mod as any).auth(request);
+}
+
+export async function DELETE(request: Request) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const mod = await import('../../../../auth');
+	return (mod as any).auth(request);
+}
+
+export async function PATCH(request: Request) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const mod = await import('../../../../auth');
+	return (mod as any).auth(request);
+}
+
+export async function OPTIONS(request: Request) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const mod = await import('../../../../auth');
+	return (mod as any).auth(request);
+}
+
+export async function HEAD(request: Request) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const mod = await import('../../../../auth');
+	return (mod as any).auth(request);
+}

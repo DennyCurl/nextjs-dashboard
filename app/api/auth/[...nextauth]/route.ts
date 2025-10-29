@@ -1,12 +1,9 @@
-import { auth } from '../../../../auth';
+import NextAuth from 'next-auth';
+import { authConfig } from '../../../../auth.config';
 
-// Forward all relevant HTTP methods to the NextAuth handler exported from the
-// project root `auth.ts`. This creates the App Router API endpoint that
-// NextAuth expects (e.g. /api/auth/callback/credentials).
-export const GET = auth;
-export const POST = auth;
-export const PUT = auth;
-export const DELETE = auth;
-export const PATCH = auth;
-export const OPTIONS = auth;
-export const HEAD = auth;
+// Create a NextAuth handler and export it for the App Router HTTP method
+// exports. This matches the expected `(request: Request) => Response` shape
+// for `GET`/`POST` etc. and satisfies Next.js type checking.
+const handler = NextAuth(authConfig);
+
+export { handler as GET, handler as POST, handler as PUT, handler as DELETE, handler as PATCH, handler as OPTIONS, handler as HEAD };

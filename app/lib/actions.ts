@@ -343,6 +343,9 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
+    // Call the signIn helper (server-side). The login form is now handled
+    // client-side so this server action is not used by the login page, but
+    // keep the original behavior for other callers.
     await signIn('credentials', formData);
   } catch (error) {
     if (error instanceof AuthError) {

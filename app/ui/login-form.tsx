@@ -1,26 +1,46 @@
 'use client';
 
 import { lusitana } from '@/app/ui/fonts';
-import {
-  AtSymbolIcon,
-  KeyIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
+import { AtSymbolIcon, KeyIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
-import { useActionState } from 'react';
-import { authenticate } from '@/app/lib/actions';
-import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined,
-  );
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setErrorMessage(null);
+    setIsPending(true);
+    const form = new FormData(e.currentTarget);
+    const email = String(form.get('email') ?? '');
+    const password = String(form.get('password') ?? '');
+    const redirectTo = String(form.get('redirectTo') ?? callbackUrl);
+
+    // Client-side signIn allows `redirect: false` so we can handle errors
+    // and then navigate programmatically. This prevents the browser from
+    // following a GET redirect to `/api/auth/callback/credentials` which
+    // causes a 404 in the credentials flow.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const res = (await signIn('credentials', { redirect: false, email, password, callbackUrl: redirectTo })) as any;
+
+    setIsPending(false);
+    if (res?.error) {
+      setErrorMessage('Invalid credentials.');
+    } else {
+      router.push(redirectTo);
+    }
+  }
+
   return (
-    <form action={formAction} className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.

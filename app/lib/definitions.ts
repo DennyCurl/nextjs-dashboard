@@ -9,16 +9,16 @@ export type User = {
   password: string;
 };
 
-export type Customer = {
+export type Patient = {
   id: string;
   name: string;
   email: string;
   image_url: string;
 };
 
-export type Invoice = {
+export type Visit = {
   id: string;
-  customer_id: string;
+  patient_id: string;
   amount: number;
   date: string;
   // In TypeScript, this is called a string union type.
@@ -31,46 +31,46 @@ export type Revenue = {
   revenue: number;
 };
 
-export type LatestInvoice = {
+export type LatestVisit = {
   id: string;
   name: string;
   image_url: string;
   email: string;
   amount: string;
+  created_at?: string;
 };
 
 // The database returns a number for amount, but we later format it to a string with the formatCurrency function
-export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
+export type LatestVisitRaw = Omit<LatestVisit, 'amount'> & {
   amount: number;
 };
 
-export type InvoicesTable = {
+export type VisitsTable = {
   id: string;
-  customer_id: string;
+  created_at: string;
+  patient_id: string;
+  user_id: string;
   name: string;
-  email: string;
   image_url: string;
-  date: string;
-  amount: number;
-  status: 'pending' | 'paid';
+  user_name?: string;
 };
 
-export type CustomersTableType = {
+export type PatientsTableType = {
   id: string;
   name: string;
   email: string;
   image_url: string;
-  total_invoices: number;
+  total_visits: number;
   total_pending: number;
   total_paid: number;
 };
 
-export type FormattedCustomersTable = {
+export type FormattedPatientsTable = {
   id: string;
   name: string;
   email: string;
   image_url: string;
-  total_invoices: number;
+  total_visits: number;
   total_pending: string;
   total_paid: string;
 };
@@ -93,11 +93,20 @@ export type ComplaintsList = ComplaintOption[];
 export type ComplaintsState = string[];
 
 
-export type InvoiceForm = {
+export type VisitForm = {
   id: string;
-  customer_id: string;
-  amount: number;
-  status: 'pending' | 'paid';
+  patient_id: string;
+  complaints?: string;
+  other_complaints?: string;
+  diagnoses?: string;
+  medications?: string;
+  consultations?: string;
+  blood_pressure?: string;
+  heart_rate?: string;
+  temperature?: string;
+  examination?: string;
+  sick_leave_from?: string;
+  sick_leave_to?: string;
 };
 
 // --- Common app types used in forms/components ---
@@ -120,4 +129,7 @@ export type SelectedMedication = {
   days?: number | null;
   // prescription sheet number (if came from prescriptions table)
   prescriptionNumber?: string | null;
+  // available quantity and unit for display
+  available_quantity?: number | null;
+  unit?: string | null;
 };

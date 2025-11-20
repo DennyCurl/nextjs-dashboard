@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
+import ErrorHandler from '@/app/ui/error-handler';
 
 export default function RootLayout({
   children,
@@ -19,7 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <ErrorHandler />
+        {children}
+      </body>
     </html>
   );
 }

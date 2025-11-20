@@ -9,12 +9,23 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
- 
+
 const SelectedDiagnosisSchema = z.object({
   id: z.preprocess((v) => (v === null || v === undefined ? null : Number(v)), z.number().nullable().optional()),
   code: z.string().optional(),
   label: z.string().optional(),
   note: z.preprocess((v) => (v === '' ? null : v), z.string().nullable().optional()),
+});
+
+const SelectedMedicationSchema = z.object({
+  id: z.preprocess((v) => (v === null || v === undefined ? null : Number(v)), z.number().nullable().optional()),
+  code: z.string().optional(),
+  label: z.string().optional(),
+  dose: z.preprocess((v) => (v === '' || v === null ? null : v), z.string().nullable().optional()),
+  note: z.preprocess((v) => (v === '' || v === null ? null : v), z.string().nullable().optional()),
+  frequencyPerDay: z.preprocess((v) => (v === null || v === undefined ? null : Number(v)), z.number().nullable().optional()),
+  days: z.preprocess((v) => (v === null || v === undefined ? null : Number(v)), z.number().nullable().optional()),
+  prescriptionNumber: z.preprocess((v) => (v === '' || v === null ? null : v), z.string().nullable().optional()),
 });
 
 const CreateExamination = z
@@ -30,6 +41,7 @@ const CreateExamination = z
     temperature: z.string().optional(),
     examination: z.string().optional(),
     diagnoses: z.array(SelectedDiagnosisSchema).optional(),
+    medications: z.array(SelectedMedicationSchema).optional(),
     consultations: z.array(z.string()).optional(),
     start_date: z.preprocess(
       (v) => {
@@ -59,10 +71,8 @@ const CreateExamination = z
     }
   });
 
-const UpdateInvoice = z.object({
-  customerId: z.string(),
-  amount: z.any(),
-  status: z.any(),
+const UpdateVisit = z.object({
+  patientId: z.string(),
 });
 
 export type State = {
@@ -127,6 +137,40 @@ export async function createExamination(prevState: State, formData: FormData) {
     }
   }
 
+  // parse medications JSON (sent as hidden input 'medications')
+  const rawMedications = formData.get('medications');
+  let medicationsParsed: Array<{
+    id?: number | null;
+    code?: string;
+    label?: string;
+    dose?: string | null;
+    note?: string | null;
+    frequencyPerDay?: number | null;
+    days?: number | null;
+    prescriptionNumber?: string | null;
+  }> = [];
+  if (rawMedications) {
+    const asString = String(rawMedications);
+    try {
+      const parsed = JSON.parse(asString);
+      if (Array.isArray(parsed)) {
+        medicationsParsed = parsed.map((p: Record<string, unknown>) => ({
+          id: p?.id != null ? (typeof p.id === 'string' ? Number(p.id) : Number(p.id as unknown as number)) : null,
+          code: p?.code != null ? String(p.code) : undefined,
+          label: p?.label != null ? String(p.label) : undefined,
+          dose: p?.dose != null ? String(p.dose) : null,
+          note: p?.note != null ? String(p.note) : null,
+          frequencyPerDay: p?.frequencyPerDay != null ? Number(p.frequencyPerDay) : null,
+          days: p?.days != null ? Number(p.days) : null,
+          prescriptionNumber: p?.prescriptionNumber != null ? String(p.prescriptionNumber) : null,
+        }));
+      }
+    } catch (e) {
+      console.warn('Failed to parse medications JSON', e);
+      medicationsParsed = [];
+    }
+  }
+
   // parse sick leave dates (start_date, end_date)
   const rawStartDate = formData.get('start_date');
   const rawEndDate = formData.get('end_date');
@@ -142,6 +186,7 @@ export async function createExamination(prevState: State, formData: FormData) {
     temperature: formData.get('temperature') ?? undefined,
     examination: formData.get('examination') ?? undefined,
     diagnoses: diagnosesParsed,
+    medications: medicationsParsed,
     consultations: consultationsParsed,
     start_date: startDate,
     end_date: endDate,
@@ -164,6 +209,7 @@ export async function createExamination(prevState: State, formData: FormData) {
     temperature,
     examination,
     diagnoses,
+    medications,
     consultations,
     start_date,
     end_date,
@@ -175,6 +221,16 @@ export async function createExamination(prevState: State, formData: FormData) {
     temperature?: string;
     examination?: string;
     diagnoses?: Array<{ id?: number | null; code?: string; label?: string; note?: string | null }>;
+    medications?: Array<{
+      id?: number | null;
+      code?: string;
+      label?: string;
+      dose?: string | null;
+      note?: string | null;
+      frequencyPerDay?: number | null;
+      days?: number | null;
+      prescriptionNumber?: string | null;
+    }>;
     consultations?: string[];
     start_date?: string | null;
     end_date?: string | null;
@@ -256,6 +312,25 @@ export async function createExamination(prevState: State, formData: FormData) {
               VALUES (${visitId}, ${start_date ?? null}, ${end_date ?? null})
             `;
           }
+
+          // insert drug administrations (medications) for this visit
+          if (medications && medications.length > 0) {
+            for (const m of medications) {
+              // Parse dose as real number if provided
+              let doseValue: number | null = null;
+              if (m.dose) {
+                const parsed = parseFloat(m.dose);
+                if (!isNaN(parsed)) {
+                  doseValue = parsed;
+                }
+              }
+
+              await tx`
+                INSERT INTO drug_administrations (id_drug, id_visit, id_prescription, dose, frequency_per_day, duration_days)
+                VALUES (${m.id ?? null}, ${visitId}, ${m.prescriptionNumber ?? null}, ${doseValue}, ${m.frequencyPerDay ?? null}, ${m.days ?? null})
+              `;
+            }
+          }
         });
         break; // success
       } catch (err) {
@@ -264,15 +339,37 @@ export async function createExamination(prevState: State, formData: FormData) {
           throw err;
         }
 
-        // If this is a transient prepared-statement error, retry once
-  const e = err as Record<string, unknown>;
-  const code = (e?.code as string | undefined) ?? (e?.severity as string | undefined);
-  const msg = String((e?.message as string | undefined) ?? err);
+        const e = err as Record<string, unknown>;
+        const code = (e?.code as string | undefined) ?? (e?.severity as string | undefined);
+        const msg = String((e?.message as string | undefined) ?? err);
+
+        // Handle duplicate key error for visits table - try to fix sequence
+        const isDuplicateKeyError = code === '23505' &&
+          (msg.includes('visits_pkey') || msg.includes('duplicate key value violates unique constraint'));
+
+        // Handle transient prepared-statement error
         const isPreparedStmtError = code === '26000' || /prepared statement .* does not exist/i.test(msg);
+
         attempt++;
+
+        if (isDuplicateKeyError && attempt < MAX_ATTEMPTS) {
+          console.warn('Duplicate key error on visits table, attempting to fix sequence (attempt', attempt + 1, ')', err);
+          try {
+            // Try to fix the sequence
+            const maxIdResult = await sql`SELECT COALESCE(MAX(id), 0) as max_id FROM visits`;
+            const maxId = maxIdResult[0]?.max_id || 0;
+            await sql`SELECT setval(pg_get_serial_sequence('visits', 'id'), ${maxId + 1}, false)`;
+            console.warn('Sequence fixed, retrying transaction');
+            await new Promise((r) => setTimeout(r, 150));
+            continue;
+          } catch (seqErr) {
+            console.error('Failed to fix sequence:', seqErr);
+            throw err; // throw original error if sequence fix fails
+          }
+        }
+
         if (isPreparedStmtError && attempt < MAX_ATTEMPTS) {
           console.warn('Transient prepared-statement error, retrying transaction (attempt', attempt + 1, ')', err);
-          // small delay before retrying
           await new Promise((r) => setTimeout(r, 150));
           continue;
         }
@@ -292,50 +389,117 @@ export async function createExamination(prevState: State, formData: FormData) {
     };
   }
 
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  revalidatePath('/dashboard/visits');
+  redirect('/dashboard/visits');
 }
 
-export async function updateInvoice(
+export async function updateVisit(
   id: string,
   prevState: State,
   formData: FormData,
 ) {
-  const validatedFields = UpdateInvoice.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+  const validatedFields = UpdateVisit.safeParse({
+    patientId: formData.get('patientId'),
   });
- 
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: 'Missing Fields. Failed to Update Visit.',
     };
   }
- 
-  const { customerId, amount, status } = validatedFields.data;
-  const amountInCents = amount * 100;
- 
+
+  const { patientId } = validatedFields.data;
+  
+  // Extract medical data from form
+  const complaints = formData.get('complaints') as string || '';
+  const bloodPressure = formData.get('blood_pressure') as string || '';
+  const heartRate = formData.get('heart_rate') as string || '';
+  const temperature = formData.get('temperature') as string || '';
+  const examination = formData.get('examination') as string || '';
+  const diagnoses = formData.get('diagnoses') as string || '[]';
+  const medications = formData.get('medications') as string || '[]';
+  const consultations = formData.get('consultations') as string || '[]';
+  const sickLeaveFrom = formData.get('sick_leave_from') as string || null;
+  const sickLeaveTo = formData.get('sick_leave_to') as string || null;
+
   try {
+    // Update main visit record
     await sql`
-      UPDATE invoices
-      SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+      UPDATE visits
+      SET patient_id = ${patientId}
       WHERE id = ${id}
     `;
-  } catch {
-    return { message: 'Database Error: Failed to Update Invoice.' };
+
+    // Update or insert examination data - delete existing first
+    await sql`DELETE FROM examinations WHERE visit_id = ${id}`;
+    await sql`
+      INSERT INTO examinations (visit_id, complaints, blood_pressure, heart_rate, temperature, examination)
+      VALUES (${id}, ${complaints}, ${bloodPressure}, ${heartRate ? parseInt(heartRate) : null}, ${temperature ? parseFloat(temperature) : null}, ${examination})
+    `;
+
+    // Update sick leave if provided
+    if (sickLeaveFrom || sickLeaveTo) {
+      await sql`
+        INSERT INTO sick_leave (visit_id, start_date, end_date)
+        VALUES (${id}, ${sickLeaveFrom}, ${sickLeaveTo})
+        ON CONFLICT (visit_id)
+        DO UPDATE SET 
+          start_date = ${sickLeaveFrom},
+          end_date = ${sickLeaveTo}
+      `;
+    }
+
+    // Handle consultations - delete existing and insert new
+    await sql`DELETE FROM consultations WHERE visit_id = ${id}`;
+    if (consultations && consultations !== '[]') {
+      const consultationsList = JSON.parse(consultations);
+      for (const consultation of consultationsList) {
+        await sql`
+          INSERT INTO consultations (visit_id, consultations)
+          VALUES (${id}, ${consultation})
+        `;
+      }
+    }
+
+    // Handle diagnoses - delete existing and insert new
+    await sql`DELETE FROM diagnosis WHERE visit_id = ${id}`;
+    if (diagnoses && diagnoses !== '[]') {
+      const diagnosisList = JSON.parse(diagnoses);
+      for (const diag of diagnosisList) {
+        await sql`
+          INSERT INTO diagnosis (visit_id, diagnosis_id, note)
+          VALUES (${id}, ${diag.id}, ${diag.note || null})
+        `;
+      }
+    }
+
+    // Handle medications/drug administrations - delete existing and insert new
+    await sql`DELETE FROM drug_administrations WHERE id_visit = ${id}`;
+    if (medications && medications !== '[]') {
+      const medicationsList = JSON.parse(medications);
+      for (const med of medicationsList) {
+        await sql`
+          INSERT INTO drug_administrations (id_visit, id_drug, dose, frequency_per_day, duration_days)
+          VALUES (${id}, ${med.id}, ${med.dose || null}, ${med.frequency || null}, ${med.duration || null})
+        `;
+      }
+    }
+
+  } catch (error) {
+    console.error('Database Error:', error);
+    return { message: 'Database Error: Failed to Update Visit.' };
   }
- 
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+
+  revalidatePath('/dashboard/visits');
+  redirect('/dashboard/visits');
 }
 
-export async function deleteInvoice(id: string) {
-  throw new Error('Failed to Delete Invoice');
+export async function deleteVisit(id: string) {
+  throw new Error('Failed to Delete Visit');
 
-  await sql`DELETE FROM invoices WHERE id = ${id}`;
-  revalidatePath('/dashboard/invoices');
+  await sql`DELETE FROM visits WHERE id = ${id}`;
+  revalidatePath('/dashboard/visits');
 }
 
 export async function authenticate(

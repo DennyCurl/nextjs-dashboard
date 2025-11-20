@@ -1,0 +1,50 @@
+nohup: ignoring input
+
+> dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+   ▲ Next.js 15.0.3
+   - Local:        http://localhost:3001
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 1815ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 1607ms (226 modules)
+ ○ Compiling / ...
+Browserslist: browsers data (caniuse-lite) is 6 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ Compiled / in 6s (706 modules)
+ GET / 200 in 6903ms
+ ✓ Compiled in 1032ms (315 modules)
+ ○ Compiling /api/drug-administrations ...
+ ✓ Compiled /api/drug-administrations in 8s (689 modules)
+Error fetching drug administrations: Error [PostgresError]: column p.full_name does not exist
+    at GET (app/api/drug-administrations/route.ts:68:24)
+  66 |     } else {
+  67 |       // Get all drug administrations (limited to last 100 for performance)
+> 68 |       rows = (await sql`
+     |                        ^
+  69 |         SELECT 
+  70 |           da.id,
+  71 |           da.id_drug, {
+  severity_local: 'ERROR',
+  severity: 'ERROR',
+  code: '42703',
+  position: '260',
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+ GET /api/drug-administrations 500 in 9232ms
+ GET /api/drug-administrations?visitId=1 200 in 650ms
+ GET /api/drug-administrations?patientId=1 200 in 379ms
+ ✓ Compiled in 2.1s (703 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 611ms (706 modules)
+ GET / 404 in 711ms
+ GET /api/drug-administrations 200 in 1066ms
+ GET /api/drug-administrations?visitId=1 200 in 813ms
+ GET /api/drug-administrations?patientId=1 200 in 238ms

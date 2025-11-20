@@ -1,0 +1,570 @@
+nohup: ignoring input
+
+> @ dev /workspaces/codespaces-blank/nextjs-dashboard
+> next dev
+
+   ▲ Next.js 15.0.3
+   - Local:        http://localhost:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 2.4s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 1432ms (226 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 7s (706 modules)
+ ✓ Compiled in 555ms (315 modules)
+ GET / 200 in 7569ms
+ ○ Compiling /api/prescriptions ...
+ ✓ Compiled /api/prescriptions in 5.8s (689 modules)
+ GET /api/prescriptions?patientId=2000031836 200 in 6989ms
+ ✓ Compiled in 1189ms (316 modules)
+ GET / 200 in 352ms
+ ✓ Compiled in 707ms (316 modules)
+ GET / 200 in 76ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 1253ms (707 modules)
+ GET /login 200 in 1359ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 2.2s (889 modules)
+ GET /api/auth/providers 200 in 4077ms
+ GET /api/auth/csrf 200 in 33ms
+ ✓ Compiled in 676ms (334 modules)
+ GET /login 200 in 233ms
+ POST /api/auth/callback/credentials? 200 in 2150ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 796ms (935 modules)
+Data fetch completed after 3 seconds.
+ GET /dashboard 200 in 2066ms
+ ○ Compiling /dashboard/invoices ...
+ ✓ Compiled /dashboard/invoices in 1689ms (987 modules)
+ GET /dashboard/invoices 200 in 3356ms
+ GET /?id=d3657daa-d107-43e1-a048-2e9d58273062&vscodeBrowserReqId=1761842655828 200 in 65ms
+ GET /login 200 in 19ms
+ GET /api/auth/providers 200 in 66ms
+ GET /api/auth/csrf 200 in 46ms
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (webpack-internal:///(rsc)/./node_modules/.pnpm/@auth+core@0.40.0/node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js:45:11)
+    at AuthInternal (webpack-internal:///(rsc)/./node_modules/.pnpm/@auth+core@0.40.0/node_modules/@auth/core/lib/index.js:69:104)
+    at async Auth (webpack-internal:///(rsc)/./node_modules/.pnpm/@auth+core@0.40.0/node_modules/@auth/core/index.js:130:34)
+    at async AppRouteRouteModule.do (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:10:33313)
+    at async AppRouteRouteModule.handle (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:10:40382)
+    at async doRender (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:1455:42)
+    at async responseGenerator (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:1814:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:1824:28)
+    at async DevServer.renderPageComponent (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:2240:24)
+    at async DevServer.renderToResponseImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:2278:32)
+    at async DevServer.pipeImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:960:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/next-server.js:281:17)
+    at async DevServer.handleRequestImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:853:17)
+    at async /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/dev/next-dev-server.js:373:20
+    at async Span.traceAsyncFn (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/trace/trace.js:153:20)
+    at async DevServer.handleRequest (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/dev/next-dev-server.js:370:24)
+    at async invokeRender (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js:183:21)
+    at async handleRequest (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js:360:24)
+    at async requestHandlerImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js:384:13)
+    at async Server.requestListener (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js:142:13)
+ POST /api/auth/callback/credentials? 200 in 35ms
+ GET /api/auth/providers 200 in 17ms
+ GET /api/auth/csrf 200 in 15ms
+[31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (webpack-internal:///(rsc)/./node_modules/.pnpm/@auth+core@0.40.0/node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js:45:11)
+    at AuthInternal (webpack-internal:///(rsc)/./node_modules/.pnpm/@auth+core@0.40.0/node_modules/@auth/core/lib/index.js:69:104)
+    at async Auth (webpack-internal:///(rsc)/./node_modules/.pnpm/@auth+core@0.40.0/node_modules/@auth/core/index.js:130:34)
+    at async AppRouteRouteModule.do (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:10:33313)
+    at async AppRouteRouteModule.handle (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:10:40382)
+    at async doRender (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:1455:42)
+    at async responseGenerator (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:1814:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:1824:28)
+    at async DevServer.renderPageComponent (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:2240:24)
+    at async DevServer.renderToResponseImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:2278:32)
+    at async DevServer.pipeImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:960:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/next-server.js:281:17)
+    at async DevServer.handleRequestImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/base-server.js:853:17)
+    at async /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/dev/next-dev-server.js:373:20
+    at async Span.traceAsyncFn (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/trace/trace.js:153:20)
+    at async DevServer.handleRequest (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/dev/next-dev-server.js:370:24)
+    at async invokeRender (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js:183:21)
+    at async handleRequest (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js:360:24)
+    at async requestHandlerImpl (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js:384:13)
+    at async Server.requestListener (/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js:142:13)
+ POST /api/auth/callback/credentials? 200 in 11ms
+ ○ Compiling /api/prescriptions ...
+ ✓ Compiled /api/prescriptions in 755ms (633 modules)
+ GET /api/prescriptions?patientId=2000031836 200 in 1850ms
+ GET /api/prescriptions?patientId=2000282910 200 in 93ms
+ ○ Compiling /dashboard/invoices/create ...
+ ✓ Compiled /dashboard/invoices/create in 3.1s (1245 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T16:45:55.406Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..NlwYPI6irrS0rGMzTHYnmA.3rdoQ6bcrwnCDY2LZvM9mraSfCqCZfFfHMSunJbfNv9SR9mAYjo59ZWkH0BQ-CHPPhZ10sCWLzt1xm8WFf6eNifBJMH1ixa-kP7eUezP7M2YivGIjUu3wGK7ygoDmhE2-yxLDhX3eyjQaDVsFsA2pX58nGS5Dbk7Pxsdzd73W3A1SgBn4-SaU2SPrrbixSbh9psXQiWbfnY1Sv2Q2eBscjisLcnzi1DbG-MKC5FZnNM.LvILaIhnF8YEMA_rkTF6DuGiEvBUZqeqoJpQCdfBRxQ
+ GET /dashboard/invoices/create 200 in 4746ms
+ ○ Compiling /api/drugs-full ...
+ ✓ Compiled /api/drugs-full in 1152ms (1249 modules)
+ GET /api/drugs-full 200 in 2573ms
+ GET /api/drugs-full 200 in 971ms
+ GET /api/icd-full 200 in 3728ms
+ GET /api/icd-full 200 in 1402ms
+ GET /api/prescriptions?patientId=2000013563 200 in 1010ms
+ GET /api/drugs-full 200 in 695ms
+ ○ Compiling /query ...
+ ✓ Compiled /query in 1373ms (1243 modules)
+ POST /query 405 in 1523ms
+ ✓ Compiled /api/prescriptions in 315ms (893 modules)
+ GET /api/prescriptions?patientId=2000031836 200 in 1396ms
+ GET /api/prescriptions?patientId=2000282910 200 in 113ms
+ GET /api/prescriptions?patientId=2000123456 200 in 90ms
+ GET /api/prescriptions?patientId=2000654321 200 in 91ms
+ ✓ Compiled /api/drugs-full in 3.7s (1259 modules)
+ ✓ Compiled in 0ms (895 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T16:48:19.904Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..l5BGL2BiRunNYCsZvaosmg.sp_ECdm7dEIepi-2o9BhOsJIc2HdBJXqwpgPNJdvxoe3qL_KUaH1rV3QoHNPPpPyHns5SJWUwao_xTJtmRUzKfH_HD0XuGTjxmLwVtA6uc6EaP7caonvTapaWSP-Ho7deWe7sWbgx0KqJSzUPwJurleVq8b5UHN4VFJGfAQHmAVnuGsFwtyyi3V_nkTcQ6ZFFw1y5ErifTVS8dsRWD6gyk0AXzm6aoFh3pNtW7H_flY.CF9AEPEWhT97fxFg9YU-oz4Fb9Qq-nYVAyFk25_19z0
+ GET /login 200 in 1523ms
+ GET /api/drugs-full 200 in 3540ms
+ GET /dashboard/invoices/create 200 in 2769ms
+ GET /api/drugs-full 200 in 293ms
+ ✓ Compiled in 2.6s (1261 modules)
+ GET /login 200 in 165ms
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T16:48:25.688Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..gN-CqkVLQBbuNTLF2S16Qg.jN_iK4jvM-C4sAXAnA6G6F-4PTPQx-e46ZRz-IwLXiaPVuZHsheoDyOCPTOuCzPYE_51rCKTMvUeE23fg_gymzlHMk63WAJZ8J5HGIGGW1Dwssb0sF2yjoni7mp_jKbet20H0659kZ9efCxXZ73wZNwnRbI3kwz4n6FjvsrHRUHyHN4tcgzxqUGwXDaX2OHqn1YCkqg0aioY_bK2dy3mzHhJJpO3ZxLOSHH6QxSGCdM.ZOf_FkZP8vyaDWjtp6BwExLmSN9dSbEgva8uSATnD4M
+ GET /api/drugs-full 200 in 3169ms
+ GET /dashboard/invoices/create 200 in 1610ms
+ GET /api/drugs-full 200 in 359ms
+ GET /api/prescriptions?patientId=2000031836 200 in 2353ms
+ ✓ Compiled /api/drugs-full in 3.3s (1257 modules)
+ ✓ Compiled in 6ms (893 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T16:49:36.781Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..F-xIcofasEmIMnRL7Tef9g.jV7kbSTdHgjLSFPS9BJEdun0pg5zD4awRB5EMbvR_0ZQl29t_OEIRcYNNqUoGujQzIC0kioqaQJHmpaNXOBqkG7wfhyGKnvgz4L-T8fIfA4d_vCxStT62X-5FGdn2TW6ACg8NeKvH2-Ldw0iNY-0fg2-rpOWWnpNkFOp4St0HedLg_dOch0hLUA4h8ZYQXOu-GsfQM16PjV85JYVMjbd-SLK891p5gcUOuxeNLjh17s.BP-yF7jdAKmQtIuOnzoQ5EtqlxHVc1FPcWRV2Zvppvk
+ GET /api/drugs-full 200 in 3572ms
+ GET /dashboard/invoices/create 200 in 2756ms
+ GET /api/drugs-full 200 in 384ms
+ GET /api/drugs-full 200 in 297ms
+ ✓ Compiled in 722ms (1259 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T16:49:41.364Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..engnDvCksMEm9cWbfJQrJA.NZTF4J3vOmm2RT2He86b93ql5p1mzNqp7HMAtQMTxMZBvjXjpaf_WGI69_jb5FSMDUEn9eGfaKW-IP1nhAHOzrjRjDWQ_Zhi-8kz5rUxQbc46EGGuVgdqAq5rpEVfFCSpBEh2dYqGIhp3RJSRpuB_F1eW5YOLClhUA2YNknlaw5j32f0aOmKaQ51AmdsiDalcJ-YBqZzsc1-C-3TfOTXeLAu5VSPbaYvSfDndhpXkdE.GMzGi8_Z_6NgjvjF4lsDJJ2DD92wDXLh2RzyiJNZ65Q
+ GET /dashboard/invoices/create 200 in 1294ms
+ GET /api/drugs-full 200 in 1424ms
+ GET /api/drugs-full 200 in 305ms
+ GET /api/drugs-full 200 in 296ms
+ ✓ Compiled in 4s (1253 modules)
+ ○ Compiling /api/drugs-full ...
+ ✓ Compiled /api/drugs-full in 665ms (891 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T16:51:35.881Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..1y-ENHmMaI1xKOtK3uzIRg.0tsyFXpc-7QYGBq0sjrNfF2xzkzlkOAvFlBQCPSEdFRPkeOcmWckHreb3DxFFYCXgLstyFGCTQg60-LX75na8E9wxCsAqK11-njyZeiYQV4WSIA_W7IWWKjLdWW7nyTaMX_VIi95_t3n2iFmtYKkyVV18y4wXLQPA0bO4DTjn0QIsEF6TtI3NACXUKz4Y0vq9m7bSB4k-_Z_TRo3Bh04TDUCOdJWmP5_tXK2niRmKBE.-FtulZiU6tH2l_BQuCF97U7Qfs02p6VjJ25yl3YdpTo
+ GET /api/drugs-full 200 in 2758ms
+ GET /dashboard/invoices/create 200 in 3125ms
+ GET /api/drugs-full 200 in 372ms
+ GET /api/drugs-full 200 in 298ms
+ ✓ Compiled /api/prescriptions in 183ms (893 modules)
+ GET /api/prescriptions?patientId=11749 200 in 1283ms
+ GET /api/drugs-full 200 in 1266ms
+ GET /api/drugs-full 200 in 456ms
+ GET /api/drugs-full 200 in 293ms
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T16:54:23.480Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..BqFbP3GjtAQBkBsl_n1T4g.H9YfcSTCFDzvTx6uWtmkonJvBh0TuZ06aCCx_3vcUFUSd290jdY5O_JEF2MotyRakR7E3se4M1DPhHslggBXFUUpa2yyJ6wDfTe8RDpC4taXqSuLLpii8AX16N7fAPoLh1bUKPvH6JuTaXVwATatpOL3Fl1HM-faEAYKl-6OXgCSc4g37BWlh0gyK-jYxA_lXUMy8BfPrTfa_ddzEfyLVcBXg4W9omtm7lzWmtcShTI.xXHx9zo7oU1A0MGT_TLgm50-3JOms6LNUnajeGsyCEg
+ GET /dashboard/invoices/create 200 in 1497ms
+ ○ Compiling /api/drugs-full ...
+ ✓ Compiled /api/drugs-full in 1256ms (891 modules)
+ ✓ Compiled (893 modules)
+ GET /api/drugs-full 200 in 2901ms
+ GET /api/drugs-full 200 in 621ms
+ GET /api/icd-full 200 in 3698ms
+ GET /api/icd-full 200 in 686ms
+ ✓ Compiled /api/prescriptions in 368ms (895 modules)
+ GET /api/prescriptions?patientId=2000031836 200 in 1423ms
+ GET /api/drugs-full 200 in 1281ms
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T16:56:37.616Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..5LliyoUH_rLJItfopGirCg.xSvUAWfHxKE4uyfGce6T_DjhRd_WVxvP-zJMLdmIg80IBkufLxXueVh6j5r8MOKdLn9o9WEB7yovFpUzpuuUKw0KkGqTHbQQr_Jx-UHeqwa6hVGpaPIF4KYzs_l_QY0HnnV9_9ff5q33RLUIJsJMP7lGkf3Tsq3v5e1yMNGB1g_W-NX-IK_mhmSVvp_r8GEvBtZdjVa2gO9-0FXF6uqaiGOm4c908NT5zFOv0tGGHtQ.JHz0uI0PNcED29DrhxtSvaijWc9hfOeGfH1fkuA6zEs
+ GET /dashboard/invoices/create 200 in 1506ms
+ ○ Compiling /api/drugs-full ...
+ ✓ Compiled /api/drugs-full in 897ms (891 modules)
+ ✓ Compiled (895 modules)
+ GET /favicon.ico 200 in 1249ms
+ GET /api/drugs-full 200 in 2230ms
+ GET /api/icd-full 200 in 2988ms
+ GET /api/drugs-full 200 in 452ms
+ GET /api/icd-full 200 in 743ms
+ ✓ Compiled /api/prescriptions in 321ms (897 modules)
+ GET /api/prescriptions?patientId=2000031836 200 in 1386ms
+ GET /api/drugs-full 200 in 1334ms
+ GET /api/drugs-full?q=%D1%96%D0%B1%D1%83%D0%BF%D1%80%D0%BE 200 in 787ms
+ ✓ Compiled in 1283ms (366 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:23:09.118Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..8SsxmUt53nCXOdFA1fs-Tw.bYr1mqyh220uIs6op294eBTdLpTZNMkgXoiZ-M0v15MAbpq9IoBPDEGdbuFAFwEDFd_S1WFng-UzvduWDkNOmewDY60elF98JOEOrOhfWs9_2RQNzg5_1HC20br_C7HP413uJeyAjRVPzwaEX9Fv17mldn_SFS3Lc2Hz2Rs8MsP081--UqwFdHYUwbvxfnu48QVu3ZCtFjJQBO7zlhxYR3kJ_4z3Bc6tPfMfyAThT78._jZGoDaxBaAgF5tV74ZdHlJcIzBNLScU8rmui8lsKj0
+ GET /dashboard/invoices/create 200 in 1621ms
+ GET /api/drugs-full 200 in 531ms
+ ✓ Compiled in 3.8s (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:23:26.807Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..ROGGq3VPuqmoOtMKpWngng.ePq0rs5H8JsNAfPf5IV1yHjQNrOCqHITb8iuE2pocHsPsqzOVEiIGk9LeWWvUqL8UAKbIIdO_njWI8A7fx5YXpFJ6HW8EjoejxmMluc5sQfdudGvTFPMsIBggJ-NkA2Ad7vlz87KKs-hfIlLBDgb4fa-cvs-DSVg_x2F18cuutTVnMg82e6slspVB_Mbh25HvChk1Kwb69FCp35LZpxNeHccaf3DRYs-NALgKg3y-RU.2iuf8y_NHeFbjS-xRMgmlS9ldyzkaaV-JJ4NgGhpXbw
+ GET /dashboard/invoices/create 200 in 1627ms
+ GET /api/drugs-full?q=%D1%96%D0%B1%D1%83%D0%BF%D1%80%D0%BE 200 in 3153ms
+ GET /api/drugs-full 200 in 4499ms
+ GET /api/drugs-full 200 in 475ms
+ GET /api/drugs-full 200 in 377ms
+ ✓ Compiled in 699ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:23:32.568Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..3N0JtKbXisa8UXPImD4qWQ.-4DcDxithiLrobYmw4Nu-r94MAbmMRP3j7iu967CeBzT3UdJ0cyfDfmeo-BVJNsiza_HcL0_Ig5DFOiCXH49dusjXb6DGpz0SOCf6X1Rs_ms94ODR-Ub0zqgm5qGUOFcJjiB2SBhXa0907_YgtZSW_hYlRgpdqxUGBD3XjqMlVWzND9K-3vag_N_YR4fWs1vyDrJXWG7LcJcXP9VlX_W7NPwsxVQJkOD_Z4Cc4rc-Iw.11zXXLOHRdqyQ_lG23nqx8JDByE8e0cLDFlTjxQtyTY
+ GET /dashboard/invoices/create 200 in 1310ms
+ GET /api/drugs-full 200 in 1431ms
+ GET /api/drugs-full?q=%D1%96%D0%B1%D1%83%D0%BF%D1%80%D0%BE 200 in 1382ms
+ GET /api/drugs-full 200 in 482ms
+ ✓ Compiled in 1024ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:23:44.083Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..6uBHvuVCk0yU_GuyKNMaPw.ozsuwpXqII2zSsVv6vjReGC3L89s-HwC-VoIv8Doq2kjcxp_NycRrQQTKhcH1vIJy9mt_YlqK8KesnA6hvFXne377qFOq6a9zeqFp9l6SjGjR_YzTTAgz23pn705SvDn12Res9xuzCkIQX2pDhx5PlPyoig8VqaK8a46YnirtJKyhzm4PLgY9l_7Xv0ioPUaViJHgjW8igY9aZ8Nm9hJbfv2ypg5DXu-KjCcRCnm8aU.Yg8Vpe4Q736MNmv2i3GLxDsHsE85xIerqtnk3EwstVs
+ GET /api/drugs-full 200 in 1632ms
+ GET /dashboard/invoices/create 200 in 1588ms
+ GET /api/drugs-full?q=%D1%96%D0%B1%D1%83%D0%BF%D1%80%D0%BE 200 in 1454ms
+ GET /api/drugs-full 200 in 351ms
+ ✓ Compiled in 530ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:23:53.864Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..b5balKaB7ND6h56wxuWxyw.jtiQnUw-movqCvV5htLrmChkMAdlOQ-rpH2RKaLHYIv1HTxsG4lcKIvsugYMDLIHA9T7YbxCyfAft_y6MwzJg_XdPvciOxa5VEHGBAvn6_ISYSRRXEr-M5-gMbfvsBfLvlmFo-sDLPLhDLHYYbUuIOiODkMAv69DyHRYdNnEk2g4-tvgeyqd24pFsUtaj1bQ_-n0g9Z8OnIFVeCq_T2SSW7E5VxP9GPiBrGgf3zkYLw.ElgO_-doWXwHc0MNM6StV6TwDkfjl2XiWZynJHIq1n0
+ GET /dashboard/invoices/create 200 in 1316ms
+ GET /api/drugs-full 200 in 1397ms
+ GET /api/drugs-full 200 in 321ms
+ GET /api/drugs-full?q=%D1%96%D0%B1%D1%83%D0%BF%D1%80%D0%BE 200 in 1353ms
+ ✓ Compiled in 443ms (366 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:24:24.743Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..iDNIho-CxC0tGp1Krlw3mg.YHsPjrwUIslu2DvwqbF_L-91G_qIupfgnoNeyYh8OAOTAWY4wONHyY25Y-lSd-g0ZyVafg4BgHmTa7uRm5jGEmMUGnBxc0M-OyJ5jGVlofvKm9Okd-EK4VoOiCr88QOaQ-NBredxd8tNE-Qrd7dJQAMAaBzB6-1cV6wa5sUry81Zf_zncRc_U_QF-AnKo0NJX-_660fQMuEGfRvTv1G5hVSWrmtdIuBnH5eKcQU2BXM.EgSa3fP3YV1G1I1oDduID4oWGfgp_GtP2Cu8kQYz-g4
+ GET /dashboard/invoices/create 200 in 758ms
+ GET /api/drugs-full 200 in 670ms
+ ✓ Compiled in 798ms (366 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:24:33.773Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..WQMrl-szFHyuvjCY1tmLBA.BTEF7Z6kyjVB_z-lu5Bbh7byrYJP5NSyX0I7zWAG4mBEKys9QEgq-13srE9wfaaYPkeotE-uisZPQeDUGd_ndD3M_xhFF2W2311xXA_v8_SVltNlVfPxEbqImgeXITDLIRBSDBqd6R0IL75evcC6x68ov6Qc4CZaLrYnmIwKq-R6M63o7WvnbTfzz5VAQ2r5SG-5vwhEp_dU0z9Qx1pNtEjtz2_Xml8YVITfHnRhDsQ.DRLVEueMrWzOUKAbgRSVjsqzslUX9Enn1GupZGm6vyc
+ GET /dashboard/invoices/create 200 in 487ms
+ GET /api/drugs-full 200 in 741ms
+ ✓ Compiled in 2.1s (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:24:43.579Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..3FgC2c5xH873ogaaYPMm_g.RusDYpuJXY1LLaQg7QgkbwLinEdOXo6iSi_Io1I19HKGx0Ec3xNCKsf-cRgrxVsYScupgM-diFktKy1NQ9wB6hqX-GGxdyFnu0KoH0JDv3P2-piozB35vcYwR3zkSAQT6YQdjYdLVHyUK0ncr5XHORHyFjEkBVH7FgGfjZx8gYhFHuip4H9Bj5JSF1wGtYpBSLZGJn4GiAJvrIpEyHpmmrubH7t0mQXyh-vTyjGwe3s.Ursl0QceeWdMwWHKrcqojoTKMKghRx6_nzWztP9qjAw
+ GET /dashboard/invoices/create 200 in 1614ms
+ GET /api/drugs-full 200 in 2051ms
+ GET /api/drugs-full 200 in 1428ms
+ ✓ Compiled in 870ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:24:52.026Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..kGrtXKJqH6ifB8OTzCyppw.eG5aEPllJN0UWLF1D4xE-BkpolTHm0pUwayvuPh-RmjAG46-IYVCBcquOBeGRlYvEGUPqojx7OqcPSfz1NOFDclze4qnwoaOysTvNfRG3-oh2AaB2kbYW2eTxaGzdr3vWwXkMuz5IsTuDdGRY9XdKc7GuZa3HC8Dj-I4XKWnSsa1na4GZr_mTaPuib6kyGha-BABA6c3Gb4B8a_ptZhKrLu7XniVstWHDvUKBSKSOkg.0WNcnQNkr4-qQBIHUC-2UZ9O_P3gBYt5DMZKcrkj0FA
+ GET /api/drugs-full 200 in 1431ms
+ GET /dashboard/invoices/create 200 in 1616ms
+ GET /api/drugs-full 200 in 379ms
+ ✓ Compiled in 1612ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:25:01.536Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..boGhajWsKTpsc7i7v408ZQ.yaqfNgEQiu00aolLB0fC3HskqbANN6-N04E92ilwhQzG75t_gYf7tqK4l0-rbecmISSHgdVJUXCrwdYdeaR4UtSI-QjILMrS2inIJ8oVS0-AniJti_NkAJc-7aYT_-FCVcUpC2wpUQMGmQbrCa2nxcczexfEwcqP3C2cBxIppWQnA-yHV7DS0FCN--P-5bMQ8hHmbHgAvrRnLpMcDmVt-tpt7DrSCSHHKMj0zICkcls.JnRQOXAwf6B4KmrFpb_u71XMDUaBg45U32gGHu0U4oM
+ GET /api/drugs-full 200 in 1468ms
+ GET /dashboard/invoices/create 200 in 1499ms
+ GET /api/drugs-full 200 in 455ms
+ ✓ Compiled in 907ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:25:18.435Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..afAWUHSh6AQw-i0fNJdFLA.IC2x0VhWa_HbeeuB8cAQWCVRh1sQn9V_Us7cR8FXZL_3rVsGUhH9WvC8tbHshVq65lNgEaq-D_8TSWFEV7OJyydLhpodVq8NtpGTHSMAPTzn9NOFr7eZpJYs-eNFpQd1yOrZI2ZroYxvDJiYJx3KEVFOS0dHt0DNSSVB2zZ9p0JaVK2nYFscH9kgJ3JcsfisxHnjujAijD3taUNZa8HEOOf7b3Kp1c9dFPBo3pBgsLY.unhV3Ov-TTSD3poJA-W_3UnXdx_e8k5IlmIHIOzfyqc
+ GET /dashboard/invoices/create 200 in 1419ms
+ GET /api/drugs-full 200 in 1366ms
+ GET /api/drugs-full 200 in 343ms
+ GET /api/drugs-full?q=%D1%96%D0%B1%D1%83%D0%BF%D1%80%D0%BE 200 in 1406ms
+ ✓ Compiled in 1077ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:25:26.939Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..taW56UPE7tFXAkS00cDwFg.HUpfh-GdGiepNsLow3t6nisu8pzcUjbnRXv6R1Nhwn0BrzKjCrRaU-U9X_mpXvc3run2LN3vX12nq-v0uYtVBSs5AiQni-gXfnqalLCqEW_ezszEhxRLkMsaOQqxK6veTxh6l_bk2CA7mLbW0kRgpR4iNwOHlhuqs9Ou1X2hiZyhOwSmrOQxtel8QYLAwj1kvutzMSZ9P-U-eLXAt9BJV91Tdi-PdNKsmo_Mi4TuwoI.BbkCMBnj_kjlfy0B9UfLsDzy8Z8bQZ1rXtGiTbfxHi4
+ GET /api/drugs-full 200 in 1377ms
+ GET /dashboard/invoices/create 200 in 1378ms
+ GET /api/drugs-full?q=%D1%96%D0%B1%D1%83%D0%BF%D1%80%D0%BE 200 in 1267ms
+ GET /api/drugs-full 200 in 362ms
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:25:44.146Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..h_uBgYGmPfa93UnSq2Uxiw.x5hiMH5XvAFGcoej9NBnLg86X_Z5pEpeZ03UVGYSqAqtRM-CGKn-VMNSuHhfDZWT_sfGxxTVw2JCZbY-HygnhR64nndGyeOFBLuLIUc7jlT5NukpL7A9hRP35q_LRFuZWKk4gYIWxASxdhtUu6Jy7np4BvPZ40ea9XRTadKOVcYh0Kj4uMHAx7DZMukJEFc2HxIRNqzp9Lrsgjmn0vrrmzDHN9Zowvl24AIuNMUNaT0.MeuZuE781HwWh8SWOj7uF2PUY_6NXLVrRdCrrJTfULQ
+ GET /dashboard/invoices/create 200 in 1208ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /api/icd-full in 1087ms (893 modules)
+ ✓ Compiled (895 modules)
+ GET /favicon.ico 200 in 1383ms
+ GET /api/drugs-full 200 in 1994ms
+ GET /api/drugs-full 200 in 379ms
+ GET /api/icd-full 200 in 3313ms
+ GET /api/icd-full 200 in 867ms
+ ○ Compiling /api/prescriptions ...
+ ✓ Compiled /api/prescriptions in 744ms (897 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:25:52.475Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..FcyM07jj8uKboLSoxccWnw.L1MrLuaTwlMH2EuPN-0rOsfUwMVxY6vR1nCZcwdJFQWAXG41EuX1fdqYrcZ5yK4IASepF0kTKrqZEK16tkQNL0qPi062ndBpyVrTuUw_4tn77zLas8Jx2XqYDtVXrN6bI2xR0hhAzLDzZOyr6CyC7qJ4XKFb_OlaVKXpKc_WHExi484LSwVmXmNRUQSTXeaT0rCTQQqdSUgwNk5D4I6Z7nZAl9Oaxu7v8ZYzC5_73rE.K2_o_B-XK7WMZqVo3ZKXFSc5pyKwDVjKoEuaVltwUrQ
+Failed to load prescriptions for patient: Error [PostgresError]: relation "inventory" does not exist
+    at GET (app/api/prescriptions/route.ts:27:28)
+  25 |     if (!Number.isFinite(patientId)) return new Response(JSON.stringify([]), { status: 200 });
+  26 |
+> 27 |     const rows = (await sql`
+     |                            ^
+  28 |       SELECT p.id, p.medication_id, p.dose, p.frequency_per_day, p.duration_days, p.prescription_number, p.start_date, p.created_at,
+  29 |              db.full_drug_name, i.available_quantity, i.unit
+  30 |       FROM "prescriptions" p {
+  severity_local: 'ERROR',
+  severity: 'ERROR',
+  code: '42P01',
+  position: '298',
+  file: 'parse_relation.c',
+  line: '1449',
+  routine: 'parserOpenTable'
+}
+ GET /api/prescriptions?patientId=2000031836 500 in 2109ms
+ GET /dashboard/invoices/create 200 in 1556ms
+ GET /api/drugs-full 200 in 1287ms
+ ✓ Compiled in 3.2s (1253 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:27:58.954Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..7Y9XGEwLx9fDa3vJnSqZyQ.-hcd0Qmyv45cSxhUtKM9S0uC1uVEZXCK16v3UyLzavDSbdBxsB1zMz_n-D2UJ7_9ovKBdid-pgktZaWWi1Ym9A_sYIBT6HC0ib13v0G-tGm01VxOBYWDKWLKXRRrTrHxTPG5twXNn9XW9Y3li5s7Ct3BI94J8NDzzMzcbnmoc3xR1gxwiTx_r_KvIz23M2vm0Q_FPQ90APMMJ_eEDxa_0ro8kO7nrzt0H0_bF4gOb5w.AlCDCOMxV5pXxsuJLjW-lMnJfDvxMNH8pxRo9ILSYhs
+ GET /dashboard/invoices/create 200 in 1981ms
+ ○ Compiling /api/drugs-full ...
+ ✓ Compiled /api/drugs-full in 582ms (891 modules)
+ GET /api/drugs-full 200 in 2165ms
+ ✓ Compiled in 1551ms (366 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:34:32.175Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..pGAxgK7M0ZYwUejgKHgHqg.o_qp74hzkwNt23idyX8qvi1vnmBBMJOyk0fLW7FTtUgD5fUjA2-uOEQZ5Xsy6RJJc0cJqdJRFJY6mCim_RrZEPk6CdxxQWd6D6mH2bwtZBkDhgeJ6VOLkIsVZAZ0C8E1aGf1_zN0-Nm3zfV1pnyQ55knsrDStpS2YOjcfgJyUohVLX0TpQi5FOE4jAhNnAcgULWoLJK0hNCIuw8EUymO-EmJJwWJgzUDQGnM8d-kf0U.7slStYOzNX-I5x8ZoVQqpR8di-xNv-gvqIxPfVZziaU
+ GET /dashboard/invoices/create 200 in 1661ms
+ GET /api/drugs-full 200 in 532ms
+ ✓ Compiled in 3.3s (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:34:45.513Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..uKWst2zmIDbjNRt7q8xC9w.uQwEFOMrYGB01kJkWQEY75MP9LuJ98P_dRyox8diYhE2ZbLFHZPVke9Wj_vxvj25yBxvB7XhhLdFP5OgBG1mVwiadsRs5XugVC1Jq3tKFUxK66rtXEQ_d-426FaxOIHI7VRGup_Nc1AO9-9_qmo4OmdSc_3TXkD4di1l8jj1TL_ivI4-wyAYuDqXuKMRCamncIJryiOS48HaLGr2Qdf7kIr0jftMcjY60KcMLVmY0Og.UimNAFOxzaUIZV5a7jD0i2B-9J-HgdkZQCZW3pESUjc
+ GET /api/drugs-full 200 in 3142ms
+ GET /dashboard/invoices/create 200 in 1616ms
+ GET /api/drugs-full 200 in 359ms
+ GET /api/drugs-full 200 in 234ms
+ ✓ Compiled in 953ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:34:51.839Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..0AILc8WKPXiowtj1OqZT1A.mPoS1Gv7D5Rz8bi7DttI8VFzl9OCfYcEfpOGVmk_xAd0lOrq_iSeQNc4r0ZsW_YJxhyMCJSWHABkPFuwz_g2DeBCSCCIeKBTQsYMegKRC1a66KYCRdeUlHtgtvaO61IPf-3M4DTdduG8dzZE0cyn7swqk17_2hn8bL6YdzPujXDG4SGTEIw8HTIltEQpE2WbqWSUTDZxiDbB6yL3UEo4QjOsa9Zp705aEzcNgquTo-o.j4mvzME3Vrurbjaw8UUNcOeyOg7X8TfWLJfUvbWFsSU
+ GET /api/drugs-full 200 in 1451ms
+ GET /dashboard/invoices/create 200 in 1464ms
+ GET /api/drugs-full 200 in 334ms
+ GET /api/drugs-full 200 in 216ms
+ ✓ Compiled in 1232ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:35:03.032Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..WonC07QrDVD1OeHLR_KgEw.6uOXnpoe-Ra3oLIpwdcBzz4Ywt2Ti5Ya5eNFSBPFAG6WDwhqpHWGXuAqBt-AJuzRworghc8vbAu2lmDj_SVuFtkdN_h47_5hNvbBR5seLId-uTUThagf8QUjrD4WNgdGT1ybGck-HwdxvwEm7yd0i70VhRLZV7LkFT0XxGTv-XKhjiypFxVKnyVs1BVVJG7x6qe5kSyetQzevywAapXDgOdo74TOumBNC2DOcp8mNCw.EN6OZrBqcbmxoUrULhYm-HRdpuxAHwZQhevDsbtJbHg
+ GET /dashboard/invoices/create 200 in 1327ms
+ GET /api/drugs-full 200 in 1441ms
+ GET /api/drugs-full 200 in 290ms
+ GET /api/drugs-full 200 in 205ms
+ ✓ Compiled in 418ms (1257 modules)
+create page: session= {
+  user: {
+    name: 'User',
+    email: 'user@nextmail.com',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a'
+  },
+  expires: '2025-11-29T17:35:25.245Z'
+}
+create page: cookie header= __Host-authjs.csrf-token=b43c4c2464a05c189b1303e5bc41ca104da9ade00d12449dabeba3adb629411e%7Ccb7d43ad16c157494aaaf220d0e25da04e64d8cdd3d50ee3067842fa91689247; __Secure-authjs.callback-url=https%3A%2F%2Fprobable-orbit-x7pjjw5449jh95x-3000.app.github.dev%2Fdashboard; __Secure-authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiMGlhcEdNWENTSDlXMmswbmRFdzZLdGsyUG1yU1NqckZlNjBuYURhZUllMmFBbEk3NFd4c0tMdXJmNmNWV3N0YTZmRFU1cU1JUUlDVkJ3VVpTa2NtZHcifQ..c78X_WpsjdRqsWbyvlTz3Q.3qf48yXiC3rzE-0rYZM2k9JHZP65AHvDsMxLABJ9CYpcE4nOuDsRz-6FlDp3wPIt4zeuI8gMd7tqhG_S5be6V-qwf9ixx1ab1git2NoLuBNECq8__1QSJ-lCvvdYg_L45-SeNXXgNN5HOyRsGZvs5jPZ66XHHk6d_MH71SB5gawyGyMVEPirf5PKqcAwr8kv7ScV2wpmdQf8Y8Yrgajnh2Gftopr6s1f-BmzMJUq3WY.qJVoigjOGhH4u1SXyxqaNBkQRXeWL6ekyz9GU3OYIiE
+ GET /dashboard/invoices/create 200 in 1403ms
+ GET /api/drugs-full 200 in 1286ms
+ GET /api/drugs-full 200 in 377ms
+ GET /api/drugs-full 200 in 309ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 4.3s (1242 modules)
+ GET /dashboard/invoices/create 404 in 4647ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 7.6s (1483 modules)
+ GET /_next/static/css/app/layout.css?v=1761847137078 404 in 8061ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 8025ms
+ GET /_next/static/chunks/main-app.js?v=1761847137078 404 in 8041ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 2.8s (937 modules)
+ GET /favicon.ico 200 in 3372ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, lstat '/workspaces/codespaces-blank/nextjs-dashboard/.next/server/app/api/drugs-full/route.js'
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../../../../.next/server/app/api/drugs-full/route' in /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server for build dependencies doesn't lead to expected result '/workspaces/codespaces-blank/nextjs-dashboard/.next/server/app/api/drugs-full/route.js', but to 'Error: Can't resolve '../../../../../../../.next/server/app/api/drugs-full/route' in '/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../../../../.next/server/app/api/drugs-full/route (expected /workspaces/codespaces-blank/nextjs-dashboard/.next/server/app/api/drugs-full/route.js)
+<w>  at file dependencies /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+<w>  at file /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+<w>  at file dependencies /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+<w>  at file /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+<w>  at file dependencies /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+<w>  at file /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+<w>  at file dependencies /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at resolve commonjs /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../../../../.next/server/app/api/prescriptions/route' in /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server for build dependencies doesn't lead to expected result '/workspaces/codespaces-blank/nextjs-dashboard/.next/server/app/api/prescriptions/route.js', but to 'Error: Can't resolve '../../../../../../../.next/server/app/api/prescriptions/route' in '/workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../../../../.next/server/app/api/prescriptions/route (expected /workspaces/codespaces-blank/nextjs-dashboard/.next/server/app/api/prescriptions/route.js)
+<w>  at file dependencies /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+<w>  at file /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+<w>  at file dependencies /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+<w>  at file /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+<w>  at file dependencies /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+<w>  at file /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+<w>  at file dependencies /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at file /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js
+<w>  at resolve commonjs /workspaces/codespaces-blank/nextjs-dashboard/node_modules/.pnpm/next@15.0.3_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js

@@ -31,16 +31,23 @@ export default function DiagnosisField({ onChange }: { onChange?: (selected: Sel
     let mounted = true;
     const controller = new AbortController();
     async function fetchICD(q = '') {
-      const url = `/api/icd-full${q ? `?q=${encodeURIComponent(q)}` : ''}`;
-      const res = await fetch(url, { signal: controller.signal });
-      const icd = await res.json();
-      if (mounted) {
-        setData(icd);
-        // if q provided, auto-expand matching branches (level1 + level2)
-        if (q) {
-          const l1Ids: number[] = icd.map((l: L1) => l.id);
-          const l2Ids: number[] = icd.flatMap((l: L1) => (l.children || []).map((c) => c.id));
-          setExpanded(Array.from(new Set([...l1Ids, ...l2Ids])));
+      try {
+        const url = `/api/icd-full${q ? `?q=${encodeURIComponent(q)}` : ''}`;
+        const res = await fetch(url, { signal: controller.signal });
+        const icd = await res.json();
+        if (mounted) {
+          setData(icd);
+          // if q provided, auto-expand matching branches (level1 + level2)
+          if (q) {
+            const l1Ids: number[] = icd.map((l: L1) => l.id);
+            const l2Ids: number[] = icd.flatMap((l: L1) => (l.children || []).map((c) => c.id));
+            setExpanded(Array.from(new Set([...l1Ids, ...l2Ids])));
+          }
+        }
+      } catch (error) {
+        // Ignore AbortError - it's expected when component unmounts
+        if (error instanceof Error && error.name !== 'AbortError') {
+          console.error('Initial load error:', error);
         }
       }
     }
@@ -53,23 +60,37 @@ export default function DiagnosisField({ onChange }: { onChange?: (selected: Sel
 
   // debounce search
   const searchTimeout = useRef<number | null>(null);
+  const searchAbortController = useRef<AbortController | null>(null);
+  
   useEffect(() => {
     if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
+    if (searchAbortController.current) searchAbortController.current.abort();
+    
     searchTimeout.current = window.setTimeout(() => {
+      searchAbortController.current = new AbortController();
       (async () => {
-        const url = `/api/icd-full${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`;
-        const res = await fetch(url);
-        const icd = await res.json();
-        setData(icd);
-        if (searchTerm) {
-          const l1Ids: number[] = icd.map((l: L1) => l.id);
-          const l2Ids: number[] = icd.flatMap((l: L1) => (l.children || []).map((c) => c.id));
-          setExpanded(Array.from(new Set([...l1Ids, ...l2Ids])));
+        try {
+          const url = `/api/icd-full${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`;
+          const res = await fetch(url, { signal: searchAbortController.current?.signal });
+          const icd = await res.json();
+          setData(icd);
+          if (searchTerm) {
+            const l1Ids: number[] = icd.map((l: L1) => l.id);
+            const l2Ids: number[] = icd.flatMap((l: L1) => (l.children || []).map((c) => c.id));
+            setExpanded(Array.from(new Set([...l1Ids, ...l2Ids])));
+          }
+        } catch (error) {
+          // Ignore AbortError - it's expected when component unmounts
+          if (error instanceof Error && error.name !== 'AbortError') {
+            console.error('Search error:', error);
+          }
         }
       })();
     }, 300) as unknown as number;
+    
     return () => {
       if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
+      if (searchAbortController.current) searchAbortController.current.abort();
     };
   }, [searchTerm]);
 

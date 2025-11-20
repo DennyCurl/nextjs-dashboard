@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест API drug-administrations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007acc;
+        }
+
+        .result {
+            background: #e8f5e8;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #4caf50;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .error {
+            background: #ffe8e8;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ff4444;
+        }
+
+        .api-url {
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+
+        button {
+            background: #007acc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #005a9e;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .input-group {
+            margin: 10px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 Тест API drug-administrations</h1>
+
+    <div class="test-section">
+        <h2>1. Отримати всі видачі медикаментів (останні 100)</h2>
+        <div class="api-url">GET /api/drug-administrations</div>
+        <button onclick="testAllAdministrations()">Тестувати</button>
+        <div id="all-result" class="result" style="display: none;">
+            <h4>Результат:</h4>
+            <pre id="all-data"></pre>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Отримати видачі медикаментів для конкретного візиту</h2>
+        <div class="input-group">
+            <label for="visitId">ID візиту:</label>
+            <input type="number" id="visitId" placeholder="Наприклад: 1" />
+        </div>
+        <div class="api-url">GET /api/drug-administrations?visitId={visitId}</div>
+        <button onclick="testVisitAdministrations()">Тестувати</button>
+        <div id="visit-result" class="result" style="display: none;">
+            <h4>Результат:</h4>
+            <pre id="visit-data"></pre>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Отримати видачі медикаментів для конкретного пацієнта</h2>
+        <div class="input-group">
+            <label for="patientId">ID пацієнта:</label>
+            <input type="number" id="patientId" placeholder="Наприклад: 1" />
+        </div>
+        <div class="api-url">GET /api/drug-administrations?patientId={patientId}</div>
+        <button onclick="testPatientAdministrations()">Тестувати</button>
+        <div id="patient-result" class="result" style="display: none;">
+            <h4>Результат:</h4>
+            <pre id="patient-data"></pre>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Інструкції для тестування</h2>
+        <ol>
+            <li>Переконайтесь, що сервер запущений (<code>npm run dev</code>)</li>
+            <li>Створіть новий огляд пацієнта з медикаментами через форму</li>
+            <li>Використовуйте ці тести для перевірки збережених даних</li>
+            <li>Перевірте різні сценарії: по візиту, по пацієнту, всі записи</li>
+        </ol>
+        <button onclick="window.open('/dashboard/visits/create', '_blank')">
+            Відкрити форму створення огляду
+        </button>
+    </div>
+
+    <script>
+        async function testAllAdministrations() {
+            const resultDiv = document.getElementById('all-result');
+            const dataDiv = document.getElementById('all-data');
+
+            try {
+                resultDiv.style.display = 'block';
+                dataDiv.textContent = 'Завантаження...';
+
+                const response = await fetch('/api/drug-administrations');
+                const data = await response.json();
+
+                if (response.ok) {
+                    dataDiv.textContent = JSON.stringify(data, null, 2);
+                    resultDiv.className = 'result';
+                } else {
+                    dataDiv.textContent = `Помилка: ${JSON.stringify(data, null, 2)}`;
+                    resultDiv.className = 'error';
+                }
+            } catch (error) {
+                dataDiv.textContent = `Помилка: ${error.message}`;
+                resultDiv.className = 'error';
+            }
+        }
+
+        async function testVisitAdministrations() {
+            const visitId = document.getElementById('visitId').value;
+            const resultDiv = document.getElementById('visit-result');
+            const dataDiv = document.getElementById('visit-data');
+
+            if (!visitId) {
+                alert('Будь ласка, введіть ID візиту');
+                return;
+            }
+
+            try {
+                resultDiv.style.display = 'block';
+                dataDiv.textContent = 'Завантаження...';
+
+                const response = await fetch(`/api/drug-administrations?visitId=${visitId}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    dataDiv.textContent = JSON.stringify(data, null, 2);
+                    resultDiv.className = 'result';
+                } else {
+                    dataDiv.textContent = `Помилка: ${JSON.stringify(data, null, 2)}`;
+                    resultDiv.className = 'error';
+                }
+            } catch (error) {
+                dataDiv.textContent = `Помилка: ${error.message}`;
+                resultDiv.className = 'error';
+            }
+        }
+
+        async function testPatientAdministrations() {
+            const patientId = document.getElementById('patientId').value;
+            const resultDiv = document.getElementById('patient-result');
+            const dataDiv = document.getElementById('patient-data');
+
+            if (!patientId) {
+                alert('Будь ласка, введіть ID пацієнта');
+                return;
+            }
+
+            try {
+                resultDiv.style.display = 'block';
+                dataDiv.textContent = 'Завантаження...';
+
+                const response = await fetch(`/api/drug-administrations?patientId=${patientId}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    dataDiv.textContent = JSON.stringify(data, null, 2);
+                    resultDiv.className = 'result';
+                } else {
+                    dataDiv.textContent = `Помилка: ${JSON.stringify(data, null, 2)}`;
+                    resultDiv.className = 'error';
+                }
+            } catch (error) {
+                dataDiv.textContent = `Помилка: ${error.message}`;
+                resultDiv.className = 'error';
+            }
+        }
+    </script>
+</body>
+
+</html>

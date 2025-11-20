@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест відображення залишку медикаментів</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007acc;
+        }
+        .result {
+            background: #e8f5e8;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #4caf50;
+        }
+        .api-url {
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        button {
+            background: #007acc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #005a9e;
+        }
+        .medication-item {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .stock-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Тест відображення залишку медикаментів</h1>
+    
+    <div class="test-section">
+        <h2>1. Тест API drugs-full</h2>
+        <p>Перевірка чи API повертає інформацію про залишок медикаментів</p>
+        <div class="api-url">GET /api/drugs-full?q=парацетамол</div>
+        <button onclick="testDrugsAPI()">Тестувати API</button>
+        <div id="drugs-result" class="result" style="display: none;">
+            <h4>Результат:</h4>
+            <pre id="drugs-data"></pre>
+            <div id="drugs-analysis"></div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Візуальний тест компонента</h2>
+        <p>Перейдіть на сторінку створення рецепта та перевірте:</p>
+        <ul>
+            <li>Чи відображається залишок при виборі медикаментів</li>
+            <li>Чи показується залишок у вибраних медикаментах</li>
+            <li>Чи правильно форматується інформація (кількість + одиниця)</li>
+        </ul>
+        <button onclick="window.open('/dashboard/visits/create', '_blank')">
+            Відкрити сторінку створення рецепта
+        </button>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Приклад очікуваного відображення</h2>
+        <div class="medication-item">
+            <strong>N02BE01 — Парацетамол таблетки 500 мг</strong>
+            <div class="stock-info">Залишок: 150 упак.</div>
+        </div>
+        <div class="medication-item">
+            <strong>M01AE01 — Ібупрофен капсули 200 мг</strong>
+            <div class="stock-info">Залишок: 0 упак.</div>
+        </div>
+        <div class="medication-item">
+            <strong>J01FA10 — Азитроміцин</strong>
+            <div class="stock-info">Залишок: 75 флак.</div>
+        </div>
+    </div>
+
+    <script>
+        async function testDrugsAPI() {
+            const resultDiv = document.getElementById('drugs-result');
+            const dataDiv = document.getElementById('drugs-data');
+            const analysisDiv = document.getElementById('drugs-analysis');
+            
+            try {
+                resultDiv.style.display = 'block';
+                dataDiv.textContent = 'Завантаження...';
+                
+                const response = await fetch('/api/drugs-full?q=парацетамол');
+                const data = await response.json();
+                
+                dataDiv.textContent = JSON.stringify(data, null, 2);
+                
+                // Аналіз структури даних
+                let analysis = '<h5>Аналіз:</h5>';
+                if (Array.isArray(data) && data.length > 0) {
+                    const hasAvailableQuantity = checkForAvailableQuantity(data);
+                    const hasUnit = checkForUnit(data);
+                    
+                    analysis += `<p>✅ Знайдено ${data.length} записів</p>`;
+                    analysis += `<p>${hasAvailableQuantity ? '✅' : '❌'} Поле available_quantity: ${hasAvailableQuantity ? 'присутнє' : 'відсутнє'}</p>`;
+                    analysis += `<p>${hasUnit ? '✅' : '❌'} Поле unit: ${hasUnit ? 'присутнє' : 'відсутнє'}</p>`;
+                } else {
+                    analysis += '<p>❌ Дані не знайдено або неправильний формат</p>';
+                }
+                
+                analysisDiv.innerHTML = analysis;
+                
+            } catch (error) {
+                dataDiv.textContent = `Помилка: ${error.message}`;
+                analysisDiv.innerHTML = '<p>❌ Помилка при виконанні запиту</p>';
+            }
+        }
+        
+        function checkForAvailableQuantity(data) {
+            function searchInNode(node) {
+                if (node.drugs && Array.isArray(node.drugs)) {
+                    for (const drug of node.drugs) {
+                        if ('available_quantity' in drug) {
+                            return true;
+                        }
+                    }
+                }
+                if (node.children && Array.isArray(node.children)) {
+                    for (const child of node.children) {
+                        if (searchInNode(child)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            for (const item of data) {
+                if (searchInNode(item)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function checkForUnit(data) {
+            function searchInNode(node) {
+                if (node.drugs && Array.isArray(node.drugs)) {
+                    for (const drug of node.drugs) {
+                        if ('unit' in drug) {
+                            return true;
+                        }
+                    }
+                }
+                if (node.children && Array.isArray(node.children)) {
+                    for (const child of node.children) {
+                        if (searchInNode(child)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            for (const item of data) {
+                if (searchInNode(item)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>

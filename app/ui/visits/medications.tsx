@@ -7,7 +7,7 @@ import { Button } from '@/app/ui/button';
 
 // SelectedMedication is imported from app/lib/definitions
 
-export default function MedicationsField({ onChange, initialSelected }: { onChange?: (selected: SelectedMedication[]) => void; initialSelected?: SelectedMedication[] }) {
+export default function MedicationsField({ onChange, initialSelected, autoExpand }: { onChange?: (selected: SelectedMedication[]) => void; initialSelected?: SelectedMedication[]; autoExpand?: boolean }) {
   const [selected, setSelected] = useState<SelectedMedication[]>(initialSelected ?? []);
   const [searchTerm, setSearchTerm] = useState('');
   type DrugRow = { id: number; full_drug_name: string; unit?: string | null; available_quantity?: number | null };
@@ -15,7 +15,7 @@ export default function MedicationsField({ onChange, initialSelected }: { onChan
 
   const [data, setData] = useState<Node[]>([]);
   const [expanded, setExpanded] = useState<number[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(autoExpand ?? false);
 
   // collect ids of nodes that should be expanded (those with children), recursively
   const collectExpandIds = useCallback((nodes: Node[] | undefined): number[] => {
@@ -71,7 +71,7 @@ export default function MedicationsField({ onChange, initialSelected }: { onChan
                     id={`med-${drug.id}`}
                     type="checkbox"
                     checked={selected.some((s) => s.id === drug.id)}
-                    onChange={() => toggleSelect(String(drug.id), drug.full_drug_name, drug.id)}
+                    onChange={() => toggleSelect(String(drug.id), drug.full_drug_name, drug.id, drug.available_quantity, drug.unit)}
                   />
                   <label htmlFor={`med-${drug.id}`} className="select-none">
                     {drug.full_drug_name}
@@ -97,6 +97,13 @@ export default function MedicationsField({ onChange, initialSelected }: { onChan
     );
   }
 
+  // Автоматичне розгортання при зміні autoExpand
+  useEffect(() => {
+    if (autoExpand) {
+      setIsOpen(true);
+    }
+  }, [autoExpand]);
+
   useEffect(() => {
     // if parent provides initialSelected (e.g., prescriptions for chosen patient), apply it
     if (initialSelected && Array.isArray(initialSelected)) {
@@ -107,13 +114,20 @@ export default function MedicationsField({ onChange, initialSelected }: { onChan
     let mounted = true;
     const controller = new AbortController();
     async function fetchATC(q = '') {
-      const url = `/api/drugs-full${q ? `?q=${encodeURIComponent(q)}` : ''}`;
-      const res = await fetch(url, { signal: controller.signal });
-      const atc = await res.json();
-      if (mounted) {
-        setData(atc);
-        if (q) {
-          setExpanded(Array.from(new Set(collectExpandIds(atc))));
+      try {
+        const url = `/api/drugs-full${q ? `?q=${encodeURIComponent(q)}` : ''}`;
+        const res = await fetch(url, { signal: controller.signal });
+        const atc = await res.json();
+        if (mounted) {
+          setData(atc);
+          if (q) {
+            setExpanded(Array.from(new Set(collectExpandIds(atc))));
+          }
+        }
+      } catch (error) {
+        // Ignore AbortError - it's expected when component unmounts
+        if (error instanceof Error && error.name !== 'AbortError') {
+          console.error('Initial load error:', error);
         }
       }
     }
@@ -126,32 +140,46 @@ export default function MedicationsField({ onChange, initialSelected }: { onChan
 
   // debounce search
   const searchTimeout = useRef<number | null>(null);
+  const searchAbortController = useRef<AbortController | null>(null);
+  
   useEffect(() => {
     if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
+    if (searchAbortController.current) searchAbortController.current.abort();
+    
     searchTimeout.current = window.setTimeout(() => {
+      searchAbortController.current = new AbortController();
       (async () => {
-        const url = `/api/drugs-full${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`;
-        const res = await fetch(url);
-        const atc = await res.json();
-        setData(atc);
-        if (searchTerm) {
-          setExpanded(Array.from(new Set(collectExpandIds(atc))));
+        try {
+          const url = `/api/drugs-full${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`;
+          const res = await fetch(url, { signal: searchAbortController.current?.signal });
+          const atc = await res.json();
+          setData(atc);
+          if (searchTerm) {
+            setExpanded(Array.from(new Set(collectExpandIds(atc))));
+          }
+        } catch (error) {
+          // Ignore AbortError - it's expected when component unmounts
+          if (error instanceof Error && error.name !== 'AbortError') {
+            console.error('Search error:', error);
+          }
         }
       })();
     }, 300) as unknown as number;
+    
     return () => {
       if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
+      if (searchAbortController.current) searchAbortController.current.abort();
     };
   }, [searchTerm, collectExpandIds]);
 
-  const toggleSelect = (code: string, name: string, id?: number | null) => {
+  const toggleSelect = (code: string, name: string, id?: number | null, available_quantity?: number | null, unit?: string | null) => {
     setSelected((prev) => {
       const idx = prev.findIndex((p) => p.code === code && p.label === name);
       let updated: SelectedMedication[];
       if (idx >= 0) {
         updated = prev.filter((_, i) => i !== idx);
       } else {
-        updated = [...prev, { id: id ?? null, code, label: name, dose: null, note: null, frequencyPerDay: null, days: null }];
+        updated = [...prev, { id: id ?? null, code, label: name, dose: null, note: null, frequencyPerDay: null, days: null, available_quantity: available_quantity ?? null, unit: unit ?? null }];
       }
       if (onChange) onChange(updated);
       return updated;
@@ -294,10 +322,17 @@ export default function MedicationsField({ onChange, initialSelected }: { onChan
                             {meds.map((s) => (
                               <div key={`${s.code}-${s.label}`} className="border rounded-md p-2 bg-gray-50">
                                 <div className="flex items-center justify-between mb-1">
-                                  <div className="text-gray-800 font-medium">{s.code} — {s.label}</div>
+                                  <div className="text-gray-800 font-medium">
+                                    {s.code} — {s.label}
+                                    {(s.available_quantity !== null && s.available_quantity !== undefined) && (
+                                      <span className="text-gray-500 ml-2 text-sm">
+                                        {`Залишок: ${s.available_quantity ?? 0}${s.unit ? ' ' + s.unit : ''}`}
+                                      </span>
+                                    )}
+                                  </div>
                                   <button
                                     type="button"
-                                    onClick={() => toggleSelect(s.code, s.label, s.id)}
+                                    onClick={() => toggleSelect(s.code, s.label, s.id, s.available_quantity, s.unit)}
                                     className="text-gray-400 hover:text-red-600 transition-colors"
                                     aria-label="Видалити препарат"
                                   >
@@ -305,38 +340,59 @@ export default function MedicationsField({ onChange, initialSelected }: { onChan
                                   </button>
                                 </div>
                                 <div className="flex flex-wrap md:flex-nowrap items-center gap-2">
-                                  <input
-                                    type="text"
-                                    placeholder="Доза"
-                                    className="w-28 rounded-md border border-gray-300 px-2 py-1 text-sm"
-                                    value={s.dose ?? ''}
-                                    onChange={(e) => updateDose(s.code, s.label, e.target.value)}
-                                  />
-                                  <input
-                                    type="number"
-                                    min={1}
-                                    inputMode="numeric"
-                                    placeholder="×/день"
-                                    className="w-24 rounded-md border border-gray-300 px-2 py-1 text-sm"
-                                    value={s.frequencyPerDay ?? ''}
-                                    onChange={(e) => updateFrequency(s.code, s.label, e.target.value)}
-                                  />
-                                  <input
-                                    type="number"
-                                    min={1}
-                                    inputMode="numeric"
-                                    placeholder="Днів"
-                                    className="w-20 rounded-md border border-gray-300 px-2 py-1 text-sm"
-                                    value={s.days ?? ''}
-                                    onChange={(e) => updateDays(s.code, s.label, e.target.value)}
-                                  />
-                                  <input
-                                    type="text"
-                                    placeholder="Примітка до препарату"
-                                    className="w-full md:flex-1 md:min-w-[200px] rounded-md border border-gray-300 px-2 py-1 text-sm"
-                                    value={s.note ?? ''}
-                                    onChange={(e) => updateNote(s.code, s.label, e.target.value)}
-                                  />
+                                  {(() => {
+                                    // Перевіряємо чи це повністю виданий препарат
+                                    const isFullyDispensed = s.label.includes('(закінчено)');
+                                    const disabledClass = isFullyDispensed
+                                      ? "bg-gray-100 text-gray-500 cursor-not-allowed"
+                                      : "";
+                                    const baseClass = "rounded-md border border-gray-300 px-2 py-1 text-sm";
+
+                                    return (
+                                      <>
+                                        <input
+                                          type="text"
+                                          placeholder="Доза"
+                                          className={`w-28 ${baseClass} ${disabledClass}`}
+                                          value={s.dose ?? ''}
+                                          onChange={(e) => !isFullyDispensed && updateDose(s.code, s.label, e.target.value)}
+                                          disabled={isFullyDispensed}
+                                          readOnly={isFullyDispensed}
+                                        />
+                                        <input
+                                          type="number"
+                                          min={1}
+                                          inputMode="numeric"
+                                          placeholder="×/день"
+                                          className={`w-24 ${baseClass} ${disabledClass}`}
+                                          value={s.frequencyPerDay ?? ''}
+                                          onChange={(e) => !isFullyDispensed && updateFrequency(s.code, s.label, e.target.value)}
+                                          disabled={isFullyDispensed}
+                                          readOnly={isFullyDispensed}
+                                        />
+                                        <input
+                                          type="number"
+                                          min={0}
+                                          inputMode="numeric"
+                                          placeholder="Днів"
+                                          className={`w-20 ${baseClass} ${disabledClass}`}
+                                          value={s.days ?? ''}
+                                          onChange={(e) => !isFullyDispensed && updateDays(s.code, s.label, e.target.value)}
+                                          disabled={isFullyDispensed}
+                                          readOnly={isFullyDispensed}
+                                        />
+                                        <input
+                                          type="text"
+                                          placeholder="Примітка до препарату"
+                                          className={`w-full md:flex-1 md:min-w-[200px] ${baseClass} ${disabledClass}`}
+                                          value={s.note ?? ''}
+                                          onChange={(e) => !isFullyDispensed && updateNote(s.code, s.label, e.target.value)}
+                                          disabled={isFullyDispensed}
+                                          readOnly={isFullyDispensed}
+                                        />
+                                      </>
+                                    );
+                                  })()}
                                 </div>
                               </div>
                             ))}

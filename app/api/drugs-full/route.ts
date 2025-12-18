@@ -9,24 +9,43 @@ type Node = NodeRow & { children: Node[]; drugs: DrugRow[] };
 
 export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = req.nextUrl;
+    const isTopRequest = searchParams.get('top') === 'true';
+
+    // If requesting top medications, return them directly
+    if (isTopRequest) {
+      const topMeds = (await sql`
+        SELECT 
+          t.id_drug,
+          b.full_drug_name,
+          t.usage_count
+        FROM pharmacy.top t
+        LEFT JOIN pharmacy.base b ON b.id = t.id_drug
+        ORDER BY t.usage_count DESC
+        LIMIT 5
+      `) as Array<{ id_drug: number; full_drug_name: string; usage_count: number }>;
+
+      return new Response(JSON.stringify(topMeds), { status: 200 });
+    }
+
     // load classification nodes for ATC and VMP (medical devices)
     const nodes = (await sql`
       SELECT id, code, name, level, parent_id, classification
-      FROM "drugClassification"
+      FROM pharmacy.classification
       WHERE classification IN ('atc','vmp')
       ORDER BY classification, level NULLS FIRST, code NULLS FIRST, name
     `) as NodeRow[];
 
-    // only include drugs that are available (quantity > 0) in availableMedications
+    // only include drugs that are available (quantity > 0) in pharmacy.stock
     const drugs = (await sql`
       SELECT db.id, db.full_drug_name, db."id_drugClassification" AS id_drugclassification, db.unit, am.quantity AS available_quantity
-      FROM "drugBase" db
-      JOIN "availableMedications" am ON am.id = db.id AND am.quantity > 0
+      FROM pharmacy.base db
+      JOIN pharmacy.stock am ON am.id = db.id AND am.quantity > 0
       ORDER BY db.full_drug_name
     `) as DrugRow[];
 
-  const nodesById: Record<number, Node> = {};
-  for (const n of nodes) nodesById[n.id] = { ...n, children: [], drugs: [] } as Node;
+    const nodesById: Record<number, Node> = {};
+    for (const n of nodes) nodesById[n.id] = { ...n, children: [], drugs: [] } as Node;
 
     // attach child nodes
     for (const id in nodesById) {

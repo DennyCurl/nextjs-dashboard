@@ -5,12 +5,13 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 type DrugAdministrationRow = {
     id: number;
-    id_drug: number | null;
-    id_visit: number | null;
-    id_prescription: string | null;
+    drug_id: number | null;
+    visit_id: number | null;
+    prescription_id: string | null;
     dose: number | null;
     frequency_per_day: number | null;
     duration_days: number | null;
+    user_id: string | null;
     drug_name?: string | null;
     unit?: string | null;
     patient_name?: string | null;
@@ -30,17 +31,18 @@ export async function GET(req: NextRequest) {
             rows = (await sql`
         SELECT 
           da.id,
-          da.id_drug,
-          da.id_visit,
-          da.id_prescription,
+          da.drug_id,
+          da.visit_id,
+          da.prescription_id,
           da.dose,
           da.frequency_per_day,
           da.duration_days,
+          da.user_id,
           db.full_drug_name AS drug_name,
           db.unit
-        FROM drug_administrations da
-        LEFT JOIN "drugBase" db ON db.id = da.id_drug
-        WHERE da.id_visit = ${Number(visitId)}
+        FROM pharmacy.administrations da
+        LEFT JOIN pharmacy.base db ON db.id = da.drug_id
+        WHERE da.visit_id = ${Number(visitId)}
         ORDER BY da.id DESC
       `) as DrugAdministrationRow[];
         } else if (patientId) {
@@ -48,18 +50,19 @@ export async function GET(req: NextRequest) {
             rows = (await sql`
         SELECT 
           da.id,
-          da.id_drug,
-          da.id_visit,
-          da.id_prescription,
+          da.drug_id,
+          da.visit_id,
+          da.prescription_id,
           da.dose,
           da.frequency_per_day,
           da.duration_days,
+          da.user_id,
           db.full_drug_name AS drug_name,
           db.unit,
           v.created_at AS visit_date
-        FROM drug_administrations da
-        LEFT JOIN "drugBase" db ON db.id = da.id_drug
-        LEFT JOIN visits v ON v.id = da.id_visit
+        FROM pharmacy.administrations da
+        LEFT JOIN pharmacy.base db ON db.id = da.drug_id
+        LEFT JOIN visits v ON v.id = da.visit_id
         WHERE v.patient_id = ${Number(patientId)}
         ORDER BY da.id DESC
       `) as DrugAdministrationRow[];
@@ -68,20 +71,21 @@ export async function GET(req: NextRequest) {
             rows = (await sql`
         SELECT 
           da.id,
-          da.id_drug,
-          da.id_visit,
-          da.id_prescription,
+          da.drug_id,
+          da.visit_id,
+          da.prescription_id,
           da.dose,
           da.frequency_per_day,
           da.duration_days,
+          da.user_id,
           db.full_drug_name AS drug_name,
           db.unit,
-          CONCAT(p.last_name, ' ', p.first_name, ' ', p.middle_name) AS patient_name,
+          (p.last_name || ' ' || p.first_name || ' ' || p.middle_name) AS patient_name,
           v.created_at AS visit_date
-        FROM drug_administrations da
-        LEFT JOIN "drugBase" db ON db.id = da.id_drug
-        LEFT JOIN visits v ON v.id = da.id_visit
-        LEFT JOIN patients p ON p.id = v.patient_id
+        FROM pharmacy.administrations da
+        LEFT JOIN pharmacy.base db ON db.id = da.drug_id
+        LEFT JOIN visits v ON v.id = da.visit_id
+        LEFT JOIN persons p ON p.id = v.patient_id
         ORDER BY da.id DESC
         LIMIT 100
       `) as DrugAdministrationRow[];

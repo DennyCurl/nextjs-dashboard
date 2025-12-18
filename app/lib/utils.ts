@@ -1,4 +1,4 @@
-import { Revenue } from './definitions';
+import { Revenue, VisitStats } from './definitions';
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
@@ -21,6 +21,19 @@ export const formatDateToLocal = (
   return formatter.format(date);
 };
 
+export const formatDateTimeToLocal = (dateStr: string) => {
+  const date = new Date(dateStr);
+  
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  
+  return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+};
+
 export const generateYAxis = (revenue: Revenue[]) => {
   // Calculate what labels we need to display on the y-axis
   // based on highest record and in 1000s
@@ -30,6 +43,21 @@ export const generateYAxis = (revenue: Revenue[]) => {
 
   for (let i = topLabel; i >= 0; i -= 1000) {
     yAxisLabels.push(`$${i / 1000}K`);
+  }
+
+  return { yAxisLabels, topLabel };
+};
+
+export const generateVisitsYAxis = (visitStats: { visits: number }[]) => {
+  // Calculate what labels we need to display on the y-axis for visits count
+  const yAxisLabels = [];
+  const highestRecord = Math.max(...visitStats.map((month) => month.visits));
+  const topLabel = Math.ceil(highestRecord / 10) * 10; // Round up to nearest 10
+
+  const step = Math.max(1, Math.ceil(topLabel / 10)); // Ensure at least 1, and reasonable steps
+  
+  for (let i = topLabel; i >= 0; i -= step) {
+    yAxisLabels.push(i.toString());
   }
 
   return { yAxisLabels, topLabel };

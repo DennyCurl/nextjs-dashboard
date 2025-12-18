@@ -1,7 +1,7 @@
-import { generateYAxis } from '@/app/lib/utils';
+import { generateVisitsYAxis } from '@/app/lib/utils';
 import { CalendarIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
-import { fetchRevenue } from '@/app/lib/data';
+import { fetchVisitsByMonth } from '@/app/lib/data';
 
 // This component is representational only.
 // For data visualization UI, check out:
@@ -10,21 +10,21 @@ import { fetchRevenue } from '@/app/lib/data';
 // https://airbnb.io/visx/
 
 export default async function RevenueChart() { // Make component async, remove the props
-  const revenue = await fetchRevenue(); // Fetch data inside the component
+  const visitStats = await fetchVisitsByMonth(); // Fetch visits data instead
 
   const chartHeight = 350;
   // NOTE: Uncomment this code in Chapter 7
 
-  const { yAxisLabels, topLabel } = generateYAxis(revenue);
+  const { yAxisLabels, topLabel } = generateVisitsYAxis(visitStats);
 
-  if (!revenue || revenue.length === 0) {
+  if (!visitStats || visitStats.length === 0) {
     return <p className="mt-4 text-gray-400">No data available.</p>;
   }
 
   return (
     <div className="w-full md:col-span-4">
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Recent Revenue
+        Кількість прийомів
       </h2>
       {/* NOTE: Uncomment this code in Chapter 7 */}
 
@@ -39,12 +39,12 @@ export default async function RevenueChart() { // Make component async, remove t
             ))}
           </div>
 
-          {revenue.map((month) => (
+          {visitStats.map((month) => (
             <div key={month.month} className="flex flex-col items-center gap-2">
               <div
-                className="w-full rounded-md bg-blue-300"
+                className="w-full rounded-md bg-green-400"
                 style={{
-                  height: `${(chartHeight / topLabel) * month.revenue}px`,
+                  height: `${(chartHeight / topLabel) * month.visits}px`,
                 }}
               ></div>
               <p className="-rotate-90 text-sm text-gray-400 sm:rotate-0">

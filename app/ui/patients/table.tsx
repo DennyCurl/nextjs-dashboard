@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
-import Search from '@/app/ui/search';
 import { FormattedPatientsTable } from '@/app/lib/definitions';
 
 export default async function PatientsTable({
@@ -10,10 +8,6 @@ export default async function PatientsTable({
 }) {
   return (
     <div className="w-full">
-      <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
-        Patients
-      </h1>
-      <Search placeholder="Search patients..." />
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
@@ -38,19 +32,6 @@ export default async function PatientsTable({
                             <p>{patient.name}</p>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-500">
-                          {patient.email}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex w-full items-center justify-between border-b py-5">
-                      <div className="flex w-1/2 flex-col">
-                        <p className="text-xs">Pending</p>
-                        <p className="font-medium">{patient.total_pending}</p>
-                      </div>
-                      <div className="flex w-1/2 flex-col">
-                        <p className="text-xs">Paid</p>
-                        <p className="font-medium">{patient.total_paid}</p>
                       </div>
                     </div>
                     <div className="pt-4 text-sm">
@@ -66,16 +47,7 @@ export default async function PatientsTable({
                       Name
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Email
-                    </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
                       Total Visits
-                    </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
-                      Total Pending
-                    </th>
-                    <th scope="col" className="px-4 py-5 font-medium">
-                      Total Paid
                     </th>
                   </tr>
                 </thead>
@@ -95,17 +67,8 @@ export default async function PatientsTable({
                           <p>{patient.name}</p>
                         </div>
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {patient.email}
-                      </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {patient.total_visits}
-                      </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {patient.total_pending}
-                      </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
-                        {patient.total_paid}
+                        {patient.total_visits}
                       </td>
                     </tr>
                   ))}

@@ -45,12 +45,12 @@ export async function GET(req: NextRequest) {
         -- Розрахунок днів що залишились
         GREATEST(0, p.duration_days - COALESCE(SUM(da.duration_days), 0)) AS remaining_days
       FROM "prescriptions" p
-      LEFT JOIN "drugBase" db ON db.id = p.medication_id
-      LEFT JOIN "availableMedications" am ON am.id = db.id
-      LEFT JOIN drug_administrations da ON (
-        da.id_drug = p.medication_id 
-        AND da.id_prescription = p.prescription_number
-        AND da.id_visit IN (
+      LEFT JOIN pharmacy.base db ON db.id = p.medication_id
+      LEFT JOIN pharmacy.stock am ON am.id = db.id
+      LEFT JOIN pharmacy.administrations da ON (
+        da.drug_id = p.medication_id 
+        AND da.prescription_id = p.prescription_number
+        AND da.visit_id IN (
           SELECT v.id FROM visits v WHERE v.patient_id = ${patientId}
         )
       )

@@ -6,7 +6,7 @@ export default function AcmeLogo() {
       className={`${roboto.className} flex flex-row items-center leading-none text-white`}
     >
   {/* Globe icon intentionally removed; keep markup simple */}
-      <p className="text-[24px]">Медична частина №43</p>
+      <p className="text-[24px]">Філія ЦОЗ ДКВС України у Харківській та Луганській областях</p>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { UpdateVisit, DeleteVisit } from '@/app/ui/visits/buttons';
-import { formatDateToLocal } from '@/app/lib/utils';
+import { formatDateTimeToLocal } from '@/app/lib/utils';
 import { fetchFilteredVisits } from '@/app/lib/data';
 
 export default async function VisitsTable({
@@ -42,7 +42,7 @@ export default async function VisitsTable({
                     <p className="text-lg font-medium">
                       Visit Date
                     </p>
-                    <p>{formatDateToLocal(visit.created_at)}</p>
+                    <p>{formatDateTimeToLocal(visit.created_at)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateVisit id={visit.id} />
@@ -88,7 +88,7 @@ export default async function VisitsTable({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(visit.created_at)}
+                    {formatDateTimeToLocal(visit.created_at)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {visit.user_name || 'Unknown'}

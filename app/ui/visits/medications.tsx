@@ -16,6 +16,7 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
   const [data, setData] = useState<Node[]>([]);
   const [expanded, setExpanded] = useState<number[]>([]);
   const [isOpen, setIsOpen] = useState(autoExpand ?? false);
+  const [commonMeds, setCommonMeds] = useState<Array<{ id: number; name: string }>>([]);
 
   // collect ids of nodes that should be expanded (those with children), recursively
   const collectExpandIds = useCallback((nodes: Node[] | undefined): number[] => {
@@ -35,10 +36,27 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
     return ids;
   }, []);
 
-  const commonMeds = [
-    { code: 'N02BE01', name: 'Парацетамол' },
-    { code: 'M01AE01', name: 'Ібупрофен' },
-  ];
+  // Load top medications on component mount
+  useEffect(() => {
+    const fetchTopMeds = async () => {
+      try {
+        const res = await fetch('/api/drugs-full?top=true');
+        const topMeds: Array<{ id_drug: number; full_drug_name: string; usage_count: number }> = await res.json();
+        setCommonMeds(topMeds.map((med) => ({
+          id: med.id_drug,
+          name: med.full_drug_name
+        })));
+      } catch (error) {
+        console.error('Failed to load top medications:', error);
+        // Fallback to static list
+        setCommonMeds([
+          { id: 0, name: 'Парацетамол' },
+          { id: 0, name: 'Ібупрофен' },
+        ]);
+      }
+    };
+    fetchTopMeds();
+  }, []);
 
   // Recursive node renderer
   const hasDrugsInSubtree = (node: Node): boolean => {
@@ -108,7 +126,6 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
     // if parent provides initialSelected (e.g., prescriptions for chosen patient), apply it
     if (initialSelected && Array.isArray(initialSelected)) {
       setSelected(initialSelected);
-      if (onChange) onChange(initialSelected);
     }
 
     let mounted = true;
@@ -136,16 +153,31 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
       mounted = false;
       controller.abort();
     };
-  }, [collectExpandIds, initialSelected, onChange]);
+  }, [collectExpandIds, initialSelected]);
+
+  // Notify parent when selected medications change (but skip initial setup)
+  const isInitialMount = useRef(true);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    if (onChangeRef.current) {
+      onChangeRef.current(selected);
+    }
+  }, [selected]);
 
   // debounce search
   const searchTimeout = useRef<number | null>(null);
   const searchAbortController = useRef<AbortController | null>(null);
-  
+
   useEffect(() => {
     if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
     if (searchAbortController.current) searchAbortController.current.abort();
-    
+
     searchTimeout.current = window.setTimeout(() => {
       searchAbortController.current = new AbortController();
       (async () => {
@@ -165,7 +197,7 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
         }
       })();
     }, 300) as unknown as number;
-    
+
     return () => {
       if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
       if (searchAbortController.current) searchAbortController.current.abort();
@@ -181,7 +213,7 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
       } else {
         updated = [...prev, { id: id ?? null, code, label: name, dose: null, note: null, frequencyPerDay: null, days: null, available_quantity: available_quantity ?? null, unit: unit ?? null }];
       }
-      if (onChange) onChange(updated);
+      if (onChangeRef.current) onChangeRef.current(updated);
       return updated;
     });
   };
@@ -192,7 +224,7 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
       if (idx === -1) return prev;
       const copy = [...prev];
       copy[idx] = { ...copy[idx], note: note || null };
-      if (onChange) onChange(copy);
+      if (onChangeRef.current) onChangeRef.current(copy);
       return copy;
     });
   };
@@ -203,7 +235,7 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
       if (idx === -1) return prev;
       const copy = [...prev];
       copy[idx] = { ...copy[idx], dose: dose || null };
-      if (onChange) onChange(copy);
+      if (onChangeRef.current) onChangeRef.current(copy);
       return copy;
     });
   };
@@ -216,7 +248,7 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
       if (idx === -1) return prev;
       const copy = [...prev];
       copy[idx] = { ...copy[idx], frequencyPerDay: Number.isFinite(v as number) ? (v as number) : null };
-      if (onChange) onChange(copy);
+      if (onChangeRef.current) onChangeRef.current(copy);
       return copy;
     });
   };
@@ -228,7 +260,7 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
       if (idx === -1) return prev;
       const copy = [...prev];
       copy[idx] = { ...copy[idx], days: Number.isFinite(v as number) ? (v as number) : null };
-      if (onChange) onChange(copy);
+      if (onChangeRef.current) onChangeRef.current(copy);
       return copy;
     });
   };
@@ -278,8 +310,8 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
 
           <div className="flex flex-wrap gap-2">
             {commonMeds.map((m) => (
-              <Button key={m.code} type="button" onClick={() => toggleSelect(m.code, m.name)} className="bg-gray-200 text-gray-800 hover:bg-gray-300">
-                {m.code} — {m.name}
+              <Button key={m.id} type="button" onClick={() => toggleSelect(String(m.id), m.name, m.id)} className="bg-gray-200 text-gray-600 hover:bg-gray-300 py-1 px-2 text-sm h-8">
+                {m.name}
               </Button>
             ))}
           </div>
@@ -410,7 +442,7 @@ export default function MedicationsField({ onChange, initialSelected, autoExpand
                   type="button"
                   onClick={() => {
                     setSelected([]);
-                    if (onChange) onChange([]);
+                    if (onChangeRef.current) onChangeRef.current([]);
                   }}
                   className="bg-red-100 text-red-700 hover:bg-red-200"
                 >

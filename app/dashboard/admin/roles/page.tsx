@@ -1,11 +1,8 @@
 import { Suspense } from 'react';
-import { fetchRoles } from '@/app/lib/data';
 import { RoleGate } from '@/app/ui/rbac/rbac-provider';
 import RoleManagement from '@/app/ui/admin/role-management';
 
 export default async function AdminRolesPage() {
-  const roles = await fetchRoles();
-
   return (
     <RoleGate role="admin" fallback={
       <div className="flex items-center justify-center min-h-[400px]">
@@ -21,7 +18,7 @@ export default async function AdminRolesPage() {
         </div>
         
         <Suspense fallback={<div>Завантаження...</div>}>
-          <RoleManagement roles={roles} />
+          <RoleManagement />
         </Suspense>
       </div>
     </RoleGate>

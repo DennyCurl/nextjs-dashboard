@@ -13,6 +13,7 @@ import {
   Role,
   Component,
   RoleOperation,
+  UserWithLocal,
 } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
@@ -573,7 +574,7 @@ export async function fetchAuthUsers() {
   }
 }
 
-export async function fetchUsersWithLocals() {
+export async function fetchUsersWithLocals(): Promise<UserWithLocal[]> {
   try {
     const data = await sql`
       SELECT
@@ -593,7 +594,7 @@ export async function fetchUsersWithLocals() {
       ORDER BY u.user_name ASC, o.organization_name, d.department_name, r.room_name
     `;
 
-    return data;
+    return data as unknown as UserWithLocal[];
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch users with locals.');

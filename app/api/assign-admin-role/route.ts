@@ -1,2 +1,6 @@
+import { NextResponse } from 'next/server';
+
 // Тимчасовий endpoint призначення ролі адміністратора видалено.
-// Файл залишено для історії; Next.js не має обробників тут (404).
+export async function GET() {
+  return NextResponse.json({ error: 'Endpoint deprecated' }, { status: 404 });
+}
